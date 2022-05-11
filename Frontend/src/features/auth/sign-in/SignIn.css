@@ -1,0 +1,24 @@
+.confirm-btn {
+    width: 100%;
+    background-color: black !important;
+    color: white !important;
+}
+
+.sign-in-container{
+    background-color: rgb(33, 37, 41);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sign-in-card-body {
+    padding: 20px 30px 30px 30px !important;
+}
+
+.sign-in-card-header {
+    padding: 30px 30px 4px 30px !important;
+}
+
+.sign-in-card-title{
+    text-align: center;
+}

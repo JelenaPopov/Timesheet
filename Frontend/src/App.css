@@ -1,0 +1,13 @@
+.main-panel{
+    background-color: #f4f3ef;
+    transition: all .5s cubic-bezier(.685,.0473,.346,1);
+}
+
+.header-title {
+    color: #66615b;
+    text-transform: capitalize;
+    font-size: 22px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    line-height: 1.625rem;
+}

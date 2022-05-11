@@ -1,0 +1,76 @@
+.card {
+    border-radius: 12px !important;
+    border: none !important;
+}
+
+.card-header {
+    border-radius: 12px !important;
+    background-color: #fff !important;
+    border: none !important;
+    padding: 32px 48px 4px 48px !important;
+}
+
+.table>thead>tr>th {
+    font-weight: 500;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    border: 0;
+    color: white;
+    padding: 12px 7px;
+    vertical-align: middle;
+}
+
+.header {
+    background-color: black;
+}
+
+.card-body {
+    padding: 4px 48px 32px 48px !important;
+}
+
+.delete-icon {
+    color: red;
+    font-size: 22px;
+}
+
+.edit-icon {
+    color: green;
+    font-size: 22px;
+    padding-right: 10px;
+}
+
+.add-btn {
+    background-color: black !important;
+    color: white !important;
+    float: right;
+    margin-bottom: 8px !important;
+}
+
+.edit-delete-container {
+    text-align: end;
+}
+
+.edit-btn {
+    background-color: transparent;
+    border: none;
+}
+
+.delete-btn {
+    background-color: transparent;
+    border: none;
+}
+
+.current-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 0px;
+}
+
+.next-btn {
+    float: right;
+}
+
+td {
+    vertical-align: middle;
+}

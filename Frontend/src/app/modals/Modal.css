@@ -1,0 +1,14 @@
+.modal-dialog-md {
+    max-width: 450px !important;
+}
+
+.modal-dialog-lg {
+    max-width: 550px !important;
+}
+
+.save-btn {
+    background-color: black !important;
+    color: white !important;
+    float: right;
+    margin-bottom: 8px !important;
+}
