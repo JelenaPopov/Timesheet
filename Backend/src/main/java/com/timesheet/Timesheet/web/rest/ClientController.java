@@ -1,7 +1,9 @@
 package com.timesheet.Timesheet.web.rest;
 
 import com.timesheet.Timesheet.domain.Client;
+import com.timesheet.Timesheet.exception.RestrictRemoveException;
 import com.timesheet.Timesheet.service.ClientService;
+import com.timesheet.Timesheet.service.ProjectService;
 import com.timesheet.Timesheet.web.dto.ClientDTO;
 import com.timesheet.Timesheet.web.mapper.ClientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +34,13 @@ public class ClientController {
 
     private final ClientMapper mapper;
 
+    private ProjectService projectService;
+
     @Autowired
-    public ClientController(ClientService service, ClientMapper mapper) {
+    public ClientController(ClientService service, ClientMapper mapper, ProjectService projectService) {
         this.service = service;
         this.mapper = mapper;
+        this.projectService = projectService;
     }
 
     @GetMapping
@@ -46,6 +51,11 @@ public class ClientController {
         headers.add("Total-Pages", Integer.toString(clients.getTotalPages()));
 
         return new ResponseEntity<>(mapper.toDto(clients.getContent()),headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ClientDTO>> findAll() {
+        return new ResponseEntity<>(mapper.toDto(service.findAll()), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -65,7 +75,10 @@ public class ClientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteOne(@PathVariable Long id) throws IllegalArgumentException {
+    public ResponseEntity<?> deleteOne(@PathVariable Long id) throws IllegalArgumentException, RestrictRemoveException {
+        if(!projectService.findClientProjects(id).isEmpty()){
+            throw new RestrictRemoveException("Delete forbidden!");
+        }
         service.delete(service.findById(id));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

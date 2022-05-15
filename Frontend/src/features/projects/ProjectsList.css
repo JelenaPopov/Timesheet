@@ -1,0 +1,18 @@
+.description{
+    max-width: 200px;
+}
+
+.add-employee {
+    color: blue;
+    font-size: 24px;
+    padding-right: 10px;
+}
+
+.add-employee-btn {
+    background-color: transparent;
+    border: none;
+}
+
+.clickable-element{
+    cursor: pointer;
+}

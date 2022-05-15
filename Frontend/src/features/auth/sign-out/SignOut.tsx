@@ -1,18 +1,15 @@
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../../app/hooks";
+import { setNewValue } from "../authSlice";
 import './SignOut.css';
 
-interface Props {
-    setToken: React.Dispatch<React.SetStateAction<any>>,
-    setUser: React.Dispatch<React.SetStateAction<any>>
-}
-
-export const SignOut = (props: Props) => {
+export const SignOut = () => {
+    const dispatch = useAppDispatch();
 
     const signOut = () => {
-        props.setUser(null);
-        props.setToken(null);
+        window.localStorage.removeItem('token');
+        dispatch(setNewValue(null));
     }
-
 
     return (
         <div className="sign-out-span">

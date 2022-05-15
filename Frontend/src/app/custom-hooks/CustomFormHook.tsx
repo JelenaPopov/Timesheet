@@ -12,12 +12,12 @@ const useCustomForm = (callback: Function, initialInput: InputType) => {
     callback();
   }
 
-  const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     event.persist();
     const { name, value } = event.currentTarget;
     setInputs(prevState => ({
       ...prevState, [name]: value
-    }))
+    }));
   }
 
   const handleResetForm = () => {

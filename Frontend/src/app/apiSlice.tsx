@@ -1,15 +1,33 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { FetchBaseQueryMeta } from '@reduxjs/toolkit/dist/query/fetchBaseQuery';
+import { setNewValue } from '../features/auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: '/api/',
   prepareHeaders: (headers) => {
     const token = window.localStorage.getItem("token");
     if (token) {
-      headers.set('X-Auth-Token', JSON.parse(token))
+      headers.set('X-Auth-Token', token);
     }
     return headers
   },
 })
+
+const baseQueryWithReauth: BaseQueryFn<
+  string | FetchArgs,
+  unknown,
+  FetchBaseQueryError,
+  {},
+  FetchBaseQueryMeta
+> = async (args, api, extraOptions) => {
+  let result = await baseQuery(args, api, extraOptions)
+  if (result.error && result.error.status === 401) {
+    window.localStorage.removeItem('token');
+    api.dispatch(setNewValue(null));
+  }
+  return result
+}
 
 export interface UserLogin {
   username: String
@@ -18,8 +36,8 @@ export interface UserLogin {
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  baseQuery: baseQuery,
-  tagTypes: ['Categories', 'Clients'],
+  baseQuery: baseQueryWithReauth,
+  tagTypes: ['Categories', 'Clients', 'Projects', 'Users', 'Employees on Project'],
   endpoints: (builder) => ({
     signIn: builder.mutation<{ token: string | undefined | null }, UserLogin>({
       query: (userLoginInfo: UserLogin) => ({
@@ -34,4 +52,4 @@ export const apiSlice = createApi({
   }),
 })
 
-export const { useSignInMutation} = apiSlice
+export const { useSignInMutation } = apiSlice

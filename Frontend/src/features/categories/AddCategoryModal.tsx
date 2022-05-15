@@ -10,19 +10,19 @@ export const AddCategoryModal = () => {
     const onSaveCategoryClicked = async () => {
         if ([inputs.name].every(Boolean)) {
             try {
-                await addNewCategory(inputs).unwrap()
-                handleResetForm()
+                await addNewCategory(inputs).unwrap();
+                handleResetForm();
             } catch (err) {
                 toast.error("Category with same name already exists!", {
                     position: toast.POSITION.TOP_CENTER
                 });
-                handleResetForm()
+                handleResetForm();
             }
         }
     }
 
     const { inputs, handleInputChange, handleSubmit, handleResetForm } = useCustomForm(onSaveCategoryClicked, { "name": "" });
-    const canSave = [inputs.name].every(Boolean)
+    const canSave = [inputs.name].every(Boolean);
 
     return (
         <AddModal

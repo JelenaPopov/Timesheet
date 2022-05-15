@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 public class ClientService extends AbstractService<Client,Long>{
@@ -32,6 +33,10 @@ public class ClientService extends AbstractService<Client,Long>{
     @Override
     public Page<Client> findAll(Integer pageNo, Integer pageSize) {
         return repository.findAll(PageRequest.of(pageNo, pageSize));
+    }
+
+    public List<Client> findAll(){
+        return repository.findAll();
     }
 
     @Override

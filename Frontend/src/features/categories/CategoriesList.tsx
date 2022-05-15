@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Category, useDeleteCategoryMutation, useGetCategoriesQuery } from './categoriesSlice'
+import { useState } from 'react';
+import { Category, useDeleteCategoryMutation, useGetCategoriesQuery } from './categoriesSlice';
 import { AddCategoryModal } from './AddCategoryModal';
 import { EditCategoryModal } from './EditCategoryModal';
 import Table from '../../app/table/Table';
@@ -11,12 +11,9 @@ export const CategoriesList = () => {
     data = {
       categories: [],
       totalPages: 0
-    },
-    isLoading
+    }
   } = useGetCategoriesQuery(page);
   const [deleteCategory] = useDeleteCategoryMutation();
-
-  let renderedCategories = <></>;
 
   const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(undefined);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -28,7 +25,7 @@ export const CategoriesList = () => {
 
   const onDeleteCategory = async (category: Category) => {
     try {
-      await deleteCategory(category.id).unwrap()
+      await deleteCategory(category.id).unwrap();
     } catch (err) {
       toast.error("Failed to delete the category!", {
         position: toast.POSITION.TOP_CENTER
@@ -36,27 +33,25 @@ export const CategoriesList = () => {
     }
   }
 
-  if (!isLoading) {
-    renderedCategories = <>
-      {data.categories.map((category: Category) => (
-        <tr key={category.id} >
-          <td>{category.name}</td>
-          <td className="edit-delete-container">
-            <button onClick={() => onSelectCategory(category)} className="edit-btn">
-              <i
-                className="bi bi-pencil-square edit-icon">
-              </i>
-            </button>
-            <button onClick={() => onDeleteCategory(category)} className="delete-btn">
-              <i
-                className="bi bi-trash delete-icon">
-              </i>
-            </button>
-          </td>
-        </tr>
-      ))}
-    </>
-  }
+  const renderedCategories = <>
+    {data.categories.map((category: Category) => (
+      <tr key={category.id} >
+        <td>{category.name}</td>
+        <td className="edit-delete-container">
+          <button onClick={() => onSelectCategory(category)} className="edit-btn">
+            <i
+              className="bi bi-pencil-square edit-icon">
+            </i>
+          </button>
+          <button onClick={() => onDeleteCategory(category)} className="delete-btn">
+            <i
+              className="bi bi-trash delete-icon">
+            </i>
+          </button>
+        </td>
+      </tr>
+    ))}
+  </>
 
   const tableHeader = <tr className="header">
     <th scope="col">Name</th>

@@ -3,7 +3,7 @@ import { Client, useDeleteClientMutation, useGetClientsQuery } from './clientsSl
 import { toast } from 'react-toastify';
 import Table from '../../app/table/Table';
 import { AddClientModal } from './AddClientModal';
-import { EditClientModal} from './EditClientModal';
+import { EditClientModal } from './EditClientModal';
 
 export const ClientsList = () => {
     const [page, setPage] = useState(1);
@@ -11,12 +11,9 @@ export const ClientsList = () => {
         data = {
             clients: [],
             totalPages: 0
-        },
-        isLoading
+        }
     } = useGetClientsQuery(page);
     const [deleteClient] = useDeleteClientMutation();
-
-    let renderedClients = <></>;
 
     const [selectedClient, setSelectedClient] = useState<Client | undefined>(undefined);
     const [showEditForm, setShowEditForm] = useState(false);
@@ -36,31 +33,29 @@ export const ClientsList = () => {
         }
     }
 
-    if (!isLoading) {
-        renderedClients = <>
-            {data.clients.map((client: Client) => (
-                <tr key={client.id} >
-                    <td>{client.firstName} {client.lastName}</td>
-                    <td>{client.country}</td>
-                    <td>{client.city}</td>
-                    <td>{client.street}</td>
-                    <td>{client.postalCode}</td>
-                    <td className="edit-delete-container">
-                        <button onClick={() => onSelectClient(client)} className="edit-btn">
-                            <i
-                                className="bi bi-pencil-square edit-icon">
-                            </i>
-                        </button>
-                        <button onClick={() => onDeleteClient(client)} className="delete-btn">
-                            <i
-                                className="bi bi-trash delete-icon">
-                            </i>
-                        </button>
-                    </td>
-                </tr>
-            ))}
-        </>
-    }
+    const renderedClients = <>
+        {data.clients.map((client: Client) => (
+            <tr key={client.id} >
+                <td>{client.firstName} {client.lastName}</td>
+                <td>{client.country}</td>
+                <td>{client.city}</td>
+                <td>{client.street}</td>
+                <td>{client.postalCode}</td>
+                <td className="edit-delete-container">
+                    <button onClick={() => onSelectClient(client)} className="edit-btn">
+                        <i
+                            className="bi bi-pencil-square edit-icon">
+                        </i>
+                    </button>
+                    <button onClick={() => onDeleteClient(client)} className="delete-btn">
+                        <i
+                            className="bi bi-trash delete-icon">
+                        </i>
+                    </button>
+                </td>
+            </tr>
+        ))}
+    </>
 
     const tableHeader = <tr className="header">
         <th scope="col">Name</th>

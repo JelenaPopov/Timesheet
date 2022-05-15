@@ -21,32 +21,32 @@ export const EditClientModal = (props: IProps) => {
                 await editClient({
                     id: client?.id, version: client?.version, firstName: inputs.firstName,
                     lastName: inputs.lastName, country: inputs.country, city: inputs.city, street: inputs.street, postalCode: inputs.postalCode
-                }).unwrap()
-                handleResetForm()
-                props.onClose()
+                }).unwrap();
+                handleResetForm();
+                props.onClose();
             } catch (err) {
                 toast.error("Something goes wrong. Please try again!", {
                     position: toast.POSITION.TOP_CENTER
                 });
-                handleResetForm()
+                handleResetForm();
             }
         }
     }
 
-    let { inputs, handleInputChange, handleSubmit, handleResetForm, setEditValues } = useCustomForm(onSaveClientClicked, { "firstName": "", "lastName": "", "country": "", "city": "", "street": "", "postalCode": "" });
-    const canSave = [inputs.firstName, inputs.lastName].every(Boolean)
+    const { inputs, handleInputChange, handleSubmit, handleResetForm, setEditValues } = useCustomForm(onSaveClientClicked, { "firstName": "", "lastName": "", "country": "", "city": "", "street": "", "postalCode": "" });
+    const canSave = [inputs.firstName, inputs.lastName].every(Boolean);
 
     useEffect(
         () => {
             if (props.show && client) {
-                setEditValues(client)
+                setEditValues(client);
             }
             else {
                 handleResetForm();
             }
         },
         [
-            props.show, client
+            props.show, client, 
         ]
     );
 

@@ -10,13 +10,13 @@ export const AddClientModal = () => {
     const onSaveClientClicked = async () => {
         if ([inputs.firstName, inputs.lastName].every(Boolean)) {
             try {
-                await addNewClient(inputs).unwrap()
-                handleResetForm()
+                await addNewClient(inputs).unwrap();
+                handleResetForm();
             } catch (err) {
                 toast.error("Something goes wrong. Please try again!", {
                     position: toast.POSITION.TOP_CENTER
                 });
-                handleResetForm()
+                handleResetForm();
             }
         }
     }

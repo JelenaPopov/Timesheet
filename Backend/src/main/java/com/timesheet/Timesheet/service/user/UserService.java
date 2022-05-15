@@ -1,11 +1,15 @@
 package com.timesheet.Timesheet.service.user;
 
+import com.timesheet.Timesheet.domain.Client;
 import com.timesheet.Timesheet.domain.user.User;
 import com.timesheet.Timesheet.domain.user.UserRole;
 import com.timesheet.Timesheet.repository.user.UserRepository;
 import com.timesheet.Timesheet.security.TokenUtils;
+import com.timesheet.Timesheet.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,12 +19,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService extends AbstractService<User,Long> implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -49,6 +53,31 @@ public class UserService implements UserDetailsService {
                 user.getUsername(),
                 user.getPassword(),
                 grantedAuthorities);
+    }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public Page<User> findAll(Integer pageNo, Integer pageSize) {
+        return userRepository.findAll(PageRequest.of(pageNo, pageSize));
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void delete(User user) {
+        user.setDeleted(true);
+        userRepository.save(user);
     }
 }
 

@@ -53,14 +53,4 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new ApiError(400, "ERRORS.ERROR", "ERRORS.INVALID_LOGIN", "/api/login"));
         }
     }
-
-    @GetMapping("/refresh")
-    public ResponseEntity<?> refresh(Principal principal) {
-        UserDetails details = userService.loadUserByUsername(principal.getName());
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(properties.JWT_HEADER, tokenUtils.generateToken(details));
-
-        return ResponseEntity.ok().headers(headers).build();
-    }
 }

@@ -1,0 +1,55 @@
+.card {
+    border-radius: 12px !important;
+    border: none !important;
+}
+
+.card-header {
+    border-radius: 12px !important;
+    background-color: #fff !important;
+    border: none !important;
+    padding: 32px 48px 4px 48px !important;
+}
+
+.table>thead>tr>th {
+    font-weight: 500;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    border: 0;
+    color: white;
+    padding: 12px 7px;
+    vertical-align: middle;
+}
+
+.header {
+    background-color: black;
+}
+
+.card-body {
+    padding: 4px 48px 32px 48px !important;
+}
+
+.current-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 0px;
+}
+
+.next-btn {
+    float: right;
+}
+
+td {
+    vertical-align: middle;
+}
+
+.project-title{
+    text-align: center;
+    padding-top: 5px !important;
+}
+
+.back-btn {
+    background-color: black !important;
+    color: white !important;
+    margin-bottom: 8px !important;
+}

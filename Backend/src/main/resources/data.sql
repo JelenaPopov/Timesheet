@@ -30,3 +30,14 @@ INSERT INTO role (deleted, persisted_at, updated_at, version, name) VALUES (0, n
 INSERT INTO user_role (deleted, persisted_at, updated_at, version, user_id, role_id) VALUES (0, now(), now(), 0, 1, 1);
 INSERT INTO user_role (deleted, persisted_at, updated_at, version, user_id, role_id) VALUES (0, now(), now(), 0, 2, 2);
 INSERT INTO user_role (deleted, persisted_at, updated_at, version, user_id, role_id) VALUES (0, now(), now(), 0, 3, 2);
+INSERT INTO user_role (deleted, persisted_at, updated_at, version, user_id, role_id) VALUES (0, now(), now(), 0, 4, 2);
+
+--PROJECTS
+INSERT INTO project (deleted, persisted_at, updated_at, version, name, description, client_id, team_lead_id)
+VALUES (0, now(), now(), 0, 'Ordering food', 'Application for ordering food', 1, 2);
+
+INSERT INTO employee_on_project (project_id, employee_id, start_date, end_date)
+VALUES (1, 3, '2022-05-01', '2023-05-01');
+
+INSERT INTO employee_on_project (project_id, employee_id, start_date, end_date)
+VALUES (1, 4, '2022-01-01','2023-01-01');

@@ -10,6 +10,9 @@ CREATE TABLE category (
     PRIMARY KEY (id)
 );
 
+ALTER TABLE project DROP FOREIGN KEY FK_project_client_id;
+ALTER TABLE project DROP FOREIGN KEY FK_project_team_lead_id;
+
 DROP TABLE IF EXISTS client;
 
 CREATE TABLE client (
@@ -73,3 +76,31 @@ CREATE TABLE user (
 
 ALTER TABLE user_role ADD CONSTRAINT FK_user_role_role FOREIGN KEY (role_id) REFERENCES role (id);
 ALTER TABLE user_role ADD CONSTRAINT FK_user_role_user FOREIGN KEY (user_id) REFERENCES user (id);
+
+DROP TABLE IF EXISTS project;
+
+CREATE TABLE project (
+    id BIGINT NOT NULL auto_increment,
+    deleted BIT,
+    persisted_at DATETIME,
+    updated_at DATETIME,
+    version INTEGER NOT NULL,
+    name VARCHAR (255) NOT NULL,
+    description VARCHAR (255) NOT NULL,
+    client_id BIGINT,
+    team_lead_id BIGINT,
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE project ADD CONSTRAINT FK_project_client_id FOREIGN KEY (client_id) REFERENCES client (id);
+ALTER TABLE project ADD CONSTRAINT FK_project_team_lead_id FOREIGN KEY (team_lead_id) REFERENCES user (id);
+
+DROP TABLE IF EXISTS employee_on_project;
+
+CREATE TABLE employee_on_project (
+    project_id BIGINT,
+    employee_id BIGINT,
+    start_date date,
+    end_date date,
+    PRIMARY KEY (project_id, employee_id)
+);

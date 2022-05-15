@@ -20,14 +20,18 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private EntryPoint entryPoint;
+    private final EntryPoint entryPoint;
 
     @Value("${jwt.header}")
     private String header;
+
+    @Autowired
+    public SecurityConfiguration(UserService userService, EntryPoint entryPoint) {
+        this.userService = userService;
+        this.entryPoint = entryPoint;
+    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

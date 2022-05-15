@@ -18,25 +18,25 @@ export const EditCategoryModal = (props: IProps) => {
     const onSaveCategoryClicked = async () => {
         if ([inputs.name].every(Boolean)) {
             try {
-                await editCategory({ id: category?.id, version: category?.version, name: inputs.name }).unwrap()
-                handleResetForm()
-                props.onClose()
+                await editCategory({ id: category?.id, version: category?.version, name: inputs.name }).unwrap();
+                handleResetForm();
+                props.onClose();
             } catch (err) {
                 toast.error("Category with same name already exists!", {
                     position: toast.POSITION.TOP_CENTER
                 });
-                handleResetForm()
+                handleResetForm();
             }
         }
     }
 
-    let { inputs, handleInputChange, handleSubmit, handleResetForm, setEditValues } = useCustomForm(onSaveCategoryClicked, { "name": "" });
-    const canSave = [inputs.name].every(Boolean)
+    const { inputs, handleInputChange, handleSubmit, handleResetForm, setEditValues } = useCustomForm(onSaveCategoryClicked, { "name": "" });
+    const canSave = [inputs.name].every(Boolean);
 
     useEffect(
         () => {
             if (props.show && category) {
-                setEditValues(category)
+                setEditValues(category);
             }
             else {
                 handleResetForm();

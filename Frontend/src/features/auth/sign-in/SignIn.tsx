@@ -2,14 +2,11 @@ import { useSignInMutation } from '../../../app/apiSlice';
 import useCustomForm from '../../../app/custom-hooks/CustomFormHook';
 import { toast } from 'react-toastify';
 import './SignIn.css';
-import jwt_decode from "jwt-decode";
+import { useAppDispatch } from '../../../app/hooks';
+import { setNewValue } from '../authSlice';
 
-interface Props {
-    setToken: React.Dispatch<React.SetStateAction<any>>,
-    setUser: React.Dispatch<React.SetStateAction<any>>
-}
-
-export const SignIn = (props: Props) => {
+export const SignIn = () => {
+    const dispatch = useAppDispatch();
 
     const [signIn] = useSignInMutation();
 
@@ -18,20 +15,19 @@ export const SignIn = (props: Props) => {
             try {
                 const payload = await signIn({ username: inputs.username, password: inputs.password }).unwrap();
                 if (payload.token) {
-                    props.setToken(payload.token)
-                    props.setUser(jwt_decode(payload.token))
+                    dispatch(setNewValue(payload.token));
                 }
             } catch (err) {
                 toast.error("Invalid username or password", {
                     position: toast.POSITION.TOP_CENTER
                 });
-                handleResetForm()
+                handleResetForm();
             }
         }
     }
 
     const { inputs, handleInputChange, handleSubmit, handleResetForm } = useCustomForm(onSignIn, { "username": "", "password": "" });
-    const canSave = [inputs.username, inputs.password].every(Boolean)
+    const canSave = [inputs.username, inputs.password].every(Boolean);
 
     return (
         <div className="row height-100 m-0 center-align sign-in-container">

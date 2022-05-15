@@ -18,7 +18,7 @@ const Sidebar = (props: Props) => {
                     <i className={iconClassName} /> {tab}
                 </li>
             </Link >
-        )
+        );
     }
 
     const liItems = routes.filter(route => route.roles.includes(props.role as Roles)).map((route) => (

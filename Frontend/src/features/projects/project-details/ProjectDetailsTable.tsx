@@ -1,8 +1,8 @@
-import './Table.css';
+import { useNavigate } from 'react-router-dom';
+import './ProjectDetailsTable.css';
 
 interface IProps {
     title: String,
-    addModalId: String,
     header: JSX.Element,
     body: JSX.Element,
     page: number,
@@ -10,16 +10,21 @@ interface IProps {
     onSetPage: (page: number) => void,
 }
 
-const Table = (props: IProps) => {
+const ProjectDetailsTable = (props: IProps) => {
+    const navigate = useNavigate();
+
     return (
         <div className="card">
             <div className="card-header container">
                 <div className="row">
-                    <div className="col-10">
-                        <h4 className="card-title">{props.title}</h4>
+                    <div className="col-2">
+                        <button className="btn btn-md back-btn" title="Back to Project List" onClick={() => navigate("/projects")}> &lt; </button>
+                    </div>
+                    <div className="col-8">
+                        <h2 className="project-title">'{props.title}' employees</h2>
                     </div>
                     <div className="col-2">
-                        <button className="btn btn-md add-btn" data-bs-toggle="modal" data-bs-target={props.addModalId}>Create New</button>
+                        &nbsp;
                     </div>
                 </div>
             </div>
@@ -51,4 +56,4 @@ const Table = (props: IProps) => {
     )
 };
 
-export default Table;
+export default ProjectDetailsTable;

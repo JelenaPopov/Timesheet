@@ -20,6 +20,10 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ['Clients']
     }),
+    getAllClients: builder.query({
+      query: () => `/clients/all`,
+      providesTags: ['Clients']
+    }),
     getClient: builder.query({
       query: (postId) => `/clients/${postId}`,
       providesTags: ['Clients']
@@ -52,6 +56,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetClientsQuery,
+  useGetAllClientsQuery,
   useGetClientQuery,
   useAddNewClientMutation,
   useEditClientMutation,
