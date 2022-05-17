@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import useCustomForm from "../../app/custom-hooks/CustomFormHook";
 import EditModal from "../../app/modals/EditModal";
 import { Client, useEditClientMutation } from "./clientsSlice";
@@ -6,7 +5,7 @@ import { toast } from 'react-toastify';
 import { ClientForm } from "./ClientForm";
 
 interface IProps {
-    client: Client | undefined,
+    client: Client,
     show: boolean,
     onClose: () => void
 }
@@ -33,23 +32,9 @@ export const EditClientModal = (props: IProps) => {
         }
     }
 
-    const { inputs, handleInputChange, handleSubmit, handleResetForm, setEditValues } = useCustomForm(onSaveClientClicked, { "firstName": "", "lastName": "", "country": "", "city": "", "street": "", "postalCode": "" });
+    const { inputs, handleInputChange, handleSubmit, handleResetForm} = useCustomForm(onSaveClientClicked, props.client);
     const canSave = [inputs.firstName, inputs.lastName].every(Boolean);
-
-    useEffect(
-        () => {
-            if (props.show && client) {
-                setEditValues(client);
-            }
-            else {
-                handleResetForm();
-            }
-        },
-        [
-            props.show, client, 
-        ]
-    );
-
+    
     return (
         <EditModal
             children={<ClientForm inputs={inputs} onChange={handleInputChange} />}

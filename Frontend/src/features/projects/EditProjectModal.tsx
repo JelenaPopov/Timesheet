@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import useCustomForm from "../../app/custom-hooks/CustomFormHook";
 import EditModal from "../../app/modals/EditModal";
 import { toast } from 'react-toastify';
@@ -8,13 +7,17 @@ import { useGetAllUsersQuery, User } from "../auth/usersSlice";
 import { ProjectForm } from "./ProjectForm";
 
 interface IProps {
-    project: Project | undefined,
+    project: Project,
     show: boolean,
     onClose: () => void
 }
 
 export const EditProjectModal = (props: IProps) => {
     const project = props.project;
+    let chosenProject = { id: props.project.id,version: props.project.version,
+        name: props.project.name, description: props.project.description,
+        client: props.project.client.id, teamLead: props.project.teamLead.id}
+
     const [editProject] = useEditProjectMutation();
     const {
         data: clients = []
@@ -47,22 +50,8 @@ export const EditProjectModal = (props: IProps) => {
         }
     }
 
-    const { inputs, handleInputChange, handleSubmit, handleResetForm, setEditValues } = useCustomForm(onSaveProjectClicked, { "name": "", "description": "", "client": '-1', "teamLead": '-1' });
+    const { inputs, handleInputChange, handleSubmit, handleResetForm} = useCustomForm(onSaveProjectClicked, chosenProject);
     const canSave = [inputs.name, inputs.client, inputs.teamLead].every(Boolean) && inputs.client !== '-1' && inputs.teamLead !== '-1';
-
-    useEffect(
-        () => {
-            if (props.show && project) {
-                setEditValues({ name: project.name, description: project.description, client: project.client.id, teamLead: project.teamLead.id });
-            }
-            else {
-                handleResetForm();
-            }
-        },
-        [
-            props.show, project
-        ]
-    );
 
     const clientsOptions =
         <>

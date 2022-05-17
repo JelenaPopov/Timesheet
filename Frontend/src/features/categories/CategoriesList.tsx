@@ -63,7 +63,8 @@ export const CategoriesList = () => {
       <Table title="Category List" addModalId="#addCategoryModal" header={tableHeader} body={renderedCategories} page={page}
         totalPages={data.totalPages} onSetPage={(currentPage: number) => setPage(currentPage)} />
       <AddCategoryModal />
-      <EditCategoryModal show={showEditForm} category={selectedCategory} onClose={() => setShowEditForm(false)} />
+      {(showEditForm && selectedCategory) && <EditCategoryModal show={showEditForm} category={selectedCategory} 
+        onClose={() => { setShowEditForm(false); setSelectedCategory(undefined); }} />}
     </>
   )
 }

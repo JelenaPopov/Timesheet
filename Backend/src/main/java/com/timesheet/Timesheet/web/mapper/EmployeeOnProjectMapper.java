@@ -2,7 +2,6 @@ package com.timesheet.Timesheet.web.mapper;
 
 import com.timesheet.Timesheet.domain.EmployeeOnProject;
 import com.timesheet.Timesheet.domain.EmployeeProjectId;
-import com.timesheet.Timesheet.domain.Project;
 import com.timesheet.Timesheet.service.EmployeeOnProjectService;
 import com.timesheet.Timesheet.web.dto.EmployeeOnProjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,7 @@ public class EmployeeOnProjectMapper {
 
     public EmployeeOnProjectDTO toDto(EmployeeOnProject model){
         EmployeeOnProjectDTO dto = new EmployeeOnProjectDTO();
-        
+
         dto.setId(model.getId().toString());
         dto.setEmployee(userMapper.toDto(model.getEmployee()));
         dto.setStartDate(model.getStartDate().toString());

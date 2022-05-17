@@ -71,7 +71,7 @@ export const ClientsList = () => {
             <Table title="Client List" addModalId="#addClientModal" header={tableHeader} body={renderedClients} page={page}
                 totalPages={data.totalPages} onSetPage={(currentPage: number) => setPage(currentPage)} />
             <AddClientModal />
-            <EditClientModal show={showEditForm} client={selectedClient} onClose={() => setShowEditForm(false)} />
+            {(showEditForm && selectedClient) && <EditClientModal show={showEditForm} client={selectedClient} onClose={() => {setShowEditForm(false); setSelectedClient(undefined);}} />}
         </>
     )
 }

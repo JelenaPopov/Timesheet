@@ -91,7 +91,7 @@ export const ProjectsList = () => {
       <Table title="Project List" addModalId="#addProjectModal" header={tableHeader} body={renderedProjects} page={page}
         totalPages={data.totalPages} onSetPage={(currentPage: number) => setPage(currentPage)} />
       <AddProjectModal />
-      <EditProjectModal show={showEditForm} project={selectedProject} onClose={() => setShowEditForm(false)} />
+      {(showEditForm && selectedProject) && <EditProjectModal show={showEditForm} project={selectedProject} onClose={() => setShowEditForm(false)} />}
       <AddEmployeeOnProject show={showAddEmployeeOnProjectForm} project={selectedProject} onClose={() => setShowAddEmployeeOnProjectForm(false)} />
     </>
   )

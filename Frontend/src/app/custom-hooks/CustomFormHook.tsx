@@ -24,15 +24,10 @@ const useCustomForm = (callback: Function, initialInput: InputType) => {
     setInputs(initialInput);
   }
 
-  const setEditValues = (values: InputType) => {
-    setInputs(values);
-  }
-
   return {
     handleSubmit,
     handleInputChange,
     handleResetForm,
-    setEditValues,
     inputs
   };
 }

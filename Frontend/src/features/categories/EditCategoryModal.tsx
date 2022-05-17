@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import useCustomForm from "../../app/custom-hooks/CustomFormHook";
 import EditModal from "../../app/modals/EditModal";
 import { Category, useEditCategoryMutation } from "./categoriesSlice";
@@ -6,7 +5,7 @@ import { toast } from 'react-toastify';
 import { CategoryForm } from "./CategoryForm";
 
 interface IProps {
-    category: Category | undefined,
+    category: Category,
     show: boolean,
     onClose: () => void
 }
@@ -30,23 +29,9 @@ export const EditCategoryModal = (props: IProps) => {
         }
     }
 
-    const { inputs, handleInputChange, handleSubmit, handleResetForm, setEditValues } = useCustomForm(onSaveCategoryClicked, { "name": "" });
+    const { inputs, handleInputChange, handleSubmit, handleResetForm} = useCustomForm(onSaveCategoryClicked, props.category);
     const canSave = [inputs.name].every(Boolean);
-
-    useEffect(
-        () => {
-            if (props.show && category) {
-                setEditValues(category);
-            }
-            else {
-                handleResetForm();
-            }
-        },
-        [
-            props.show, category
-        ]
-    );
-
+   
     return (
         <EditModal
             children={<CategoryForm inputs={inputs} onChange={handleInputChange} />}
