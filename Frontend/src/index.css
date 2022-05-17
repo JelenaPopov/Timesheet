@@ -1,3 +1,7 @@
+* {
+  font-family: 'Exo 2', 'Roboto', sans-serif;
+}
+
 html, body, #root, .App {
   height: 100%;
 }

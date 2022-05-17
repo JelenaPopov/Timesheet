@@ -1,7 +1,7 @@
 import useCustomForm from "../../../app/custom-hooks/CustomFormHook";
-import { Project, useAddEmployeeOnProjectMutation} from "../projectsSlice";
+import { Project, useAssignEmployeeToProjectMutation} from "../projectsSlice";
 import { toast } from 'react-toastify';
-import { EmployeeOnProjectForm } from "./EmployeeOnProjectForm";
+import { AssignEmployeeToProjectForm} from "./AssignEmployeeToProjectForm";
 import { useGetAllUsersQuery, User } from "../../auth/usersSlice";
 import EditModal from "../../../app/modals/EditModal";
 
@@ -11,9 +11,9 @@ interface IProps {
     onClose: () => void
 }
 
-export const AddEmployeeOnProject = (props: IProps) => {
+export const AssignEmployeeToProject = (props: IProps) => {
     const project = props.project;
-    const [addEmployeeOnProject] = useAddEmployeeOnProjectMutation();
+    const [assignEmployeeToProject] = useAssignEmployeeToProjectMutation();
 
     const {
         data: users = []
@@ -26,7 +26,7 @@ export const AddEmployeeOnProject = (props: IProps) => {
                 const employee = users.find((el: User) => el.id === parseInt(inputs.employee));
                 const data = {"id":null, "projectId": project?.id, "employee": employee,
                 "startDate": inputs.startDate, "endDate": inputs.endDate};
-                await addEmployeeOnProject(data).unwrap();
+                await assignEmployeeToProject(data).unwrap();
 
                 handleResetForm();
                 props.onClose();
@@ -53,12 +53,12 @@ export const AddEmployeeOnProject = (props: IProps) => {
 
     return (
         <EditModal
-            children={<EmployeeOnProjectForm inputs={inputs} onChange={handleInputChange} usersOptions={usersOptions} />}
+            children={<AssignEmployeeToProjectForm inputs={inputs} onChange={handleInputChange} usersOptions={usersOptions} />}
             show={props.show}
             onSave={handleSubmit}
             onClose={props.onClose}
             canSave={canSave}
-            title="New Project"
+            title="Assign Employee"
             cssClasses="modal-dialog-lg" />
     )
 }

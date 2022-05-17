@@ -55,7 +55,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Projects']
     }),
-    addEmployeeOnProject: builder.mutation({
+    assignEmployeeToProject: builder.mutation({
       query: (data: EmployeeOnProject) => ({
         url: `/projects/${data.projectId}/employees`,
         method: 'POST',
@@ -79,7 +79,7 @@ export const {
   useAddNewProjectMutation,
   useEditProjectMutation,
   useDeleteProjectMutation,
-  useAddEmployeeOnProjectMutation, 
+  useAssignEmployeeToProjectMutation, 
   useGetEmployeesOnProjectQuery
 } = extendedApiSlice
 

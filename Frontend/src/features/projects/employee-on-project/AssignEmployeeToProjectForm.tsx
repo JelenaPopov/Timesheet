@@ -6,7 +6,7 @@ interface IProps {
     usersOptions: JSX.Element
 }
 
-export const EmployeeOnProjectForm = (props: IProps) => {
+export const AssignEmployeeToProjectForm = (props: IProps) => {
 
     return (
         <>
@@ -14,7 +14,7 @@ export const EmployeeOnProjectForm = (props: IProps) => {
                 <label htmlFor="employee" className="form-label">Employee</label>
                 <select className="form-control" value={props.inputs.employee} name="employee" id="employee" onChange={props.onChange}>
                     <option key='-1' value='-1'>
-                        --- Select option ---
+                        -- Select option --
                     </option>
                     {props.usersOptions}
                 </select>

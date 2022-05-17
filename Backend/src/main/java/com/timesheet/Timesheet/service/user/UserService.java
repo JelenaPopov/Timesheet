@@ -1,11 +1,10 @@
 package com.timesheet.Timesheet.service.user;
 
-import com.timesheet.Timesheet.domain.Client;
 import com.timesheet.Timesheet.domain.user.User;
 import com.timesheet.Timesheet.domain.user.UserRole;
 import com.timesheet.Timesheet.repository.user.UserRepository;
 import com.timesheet.Timesheet.security.TokenUtils;
-import com.timesheet.Timesheet.service.AbstractService;
+import com.timesheet.Timesheet.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService extends AbstractService<User,Long> implements UserDetailsService {
+public class UserService implements GenericService<User,Long>, UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -70,14 +69,14 @@ public class UserService extends AbstractService<User,Long> implements UserDetai
         return userRepository.findAll(PageRequest.of(pageNo, pageSize));
     }
 
-    public List<User> findAll(){
-        return userRepository.findAll();
-    }
-
     @Override
     public void delete(User user) {
         user.setDeleted(true);
         userRepository.save(user);
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
 }
 

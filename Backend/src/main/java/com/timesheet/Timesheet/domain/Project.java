@@ -12,7 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,6 +34,6 @@ public class Project extends AbstractModel{
     @PrimaryKeyJoinColumn
     private User teamLead;
 
-    @OneToMany(mappedBy = "project", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "project", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<EmployeeOnProject> employeeOnProjects;
 }

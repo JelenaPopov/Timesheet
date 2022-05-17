@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 
 @Service
-public class CategoryService extends AbstractService<Category,Long> {
+public class CategoryService implements GenericService<Category,Long> {
 
     private final CategoryRepository repository;
 

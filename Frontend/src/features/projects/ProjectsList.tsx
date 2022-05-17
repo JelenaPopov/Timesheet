@@ -5,8 +5,9 @@ import Table from '../../app/table/Table';
 import { toast } from 'react-toastify';
 import { AddProjectModal } from './AddProjectModal';
 import { EditProjectModal } from './EditProjectModal';
-import { AddEmployeeOnProject } from './employee-on-project/AddEmployeeOnProject';
+import { AssignEmployeeToProject } from './employee-on-project/AssignEmployeeToProject';
 import { useNavigate } from 'react-router-dom';
+import { DELETE_PROJECT_ERROR_MESSAGE } from '../../constants';
 
 export const ProjectsList = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export const ProjectsList = () => {
   const [selectedProject, setSelectedProject] = useState<Project | undefined>(undefined);
 
   const [showEditForm, setShowEditForm] = useState(false);
-  const [showAddEmployeeOnProjectForm, setShowAddEmployeeOnProjectForm] = useState(false);
+  const [showShowAssignEmployeeToProjectForm, setShowAssignEmployeeToProjectForm] = useState(false);
 
   const onEditProject = (project: Project) => {
     setSelectedProject(project);
@@ -34,15 +35,13 @@ export const ProjectsList = () => {
     try {
       await deleteProject(project.id).unwrap();
     } catch (err) {
-      toast.error("Failed to delete the project!", {
-        position: toast.POSITION.TOP_CENTER
-      });
+      toast.error(DELETE_PROJECT_ERROR_MESSAGE);
     }
   }
 
-  const onAddEmployeeOnProject = (project: Project) => {
+  const onAssignEmployeeToProject = (project: Project) => {
     setSelectedProject(project);
-    setShowAddEmployeeOnProjectForm(true);
+    setShowAssignEmployeeToProjectForm(true);
   }
 
   const onViewProject = (projectId: number) => {
@@ -68,7 +67,7 @@ export const ProjectsList = () => {
               className="bi bi-trash delete-icon">
             </i>
           </button>
-          <button onClick={() => onAddEmployeeOnProject(project)} className="add-employee-btn" title="Add Employee on Project">
+          <button onClick={() => onAssignEmployeeToProject(project)} className="add-employee-btn" title="Add Employee on Project">
             <i
               className="bi bi-person-plus add-employee">
             </i>
@@ -92,7 +91,7 @@ export const ProjectsList = () => {
         totalPages={data.totalPages} onSetPage={(currentPage: number) => setPage(currentPage)} />
       <AddProjectModal />
       {(showEditForm && selectedProject) && <EditProjectModal show={showEditForm} project={selectedProject} onClose={() => setShowEditForm(false)} />}
-      <AddEmployeeOnProject show={showAddEmployeeOnProjectForm} project={selectedProject} onClose={() => setShowAddEmployeeOnProjectForm(false)} />
+      <AssignEmployeeToProject show={showShowAssignEmployeeToProjectForm} project={selectedProject} onClose={() => setShowAssignEmployeeToProjectForm(false)} />
     </>
   )
 }

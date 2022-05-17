@@ -18,7 +18,7 @@ const ProjectDetailsTable = (props: IProps) => {
             <div className="card-header container">
                 <div className="row">
                     <div className="col-2">
-                        <button className="btn btn-md back-btn" title="Back to Project List" onClick={() => navigate("/projects")}> &lt; </button>
+                        <button className="btn btn-md back-btn" title="Back to Project List" onClick={() => navigate("/projects")}> &lt;&lt; Back </button>
                     </div>
                     <div className="col-8">
                         <h2 className="project-title">'{props.title}' employees</h2>

@@ -4,6 +4,7 @@ import { AddCategoryModal } from './AddCategoryModal';
 import { EditCategoryModal } from './EditCategoryModal';
 import Table from '../../app/table/Table';
 import { toast } from 'react-toastify';
+import { DELETE_CATEGORY_ERROR_MESSAGE } from '../../constants';
 
 export const CategoriesList = () => {
   const [page, setPage] = useState(1);
@@ -27,9 +28,7 @@ export const CategoriesList = () => {
     try {
       await deleteCategory(category.id).unwrap();
     } catch (err) {
-      toast.error("Failed to delete the category!", {
-        position: toast.POSITION.TOP_CENTER
-      });
+      toast.error(DELETE_CATEGORY_ERROR_MESSAGE);
     }
   }
 

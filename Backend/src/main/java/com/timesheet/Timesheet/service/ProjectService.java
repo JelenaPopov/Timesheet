@@ -1,7 +1,6 @@
 package com.timesheet.Timesheet.service;
 
 import com.timesheet.Timesheet.domain.EmployeeOnProject;
-import com.timesheet.Timesheet.domain.EmployeeProjectId;
 import com.timesheet.Timesheet.domain.Project;
 import com.timesheet.Timesheet.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class ProjectService extends AbstractService<Project,Long>{
+public class ProjectService implements GenericService<Project,Long> {
 
     private final ProjectRepository repository;
 
@@ -47,7 +46,7 @@ public class ProjectService extends AbstractService<Project,Long>{
         return repository.findClientProjects(clientId);
     }
 
-    public Project addEmployeeOnProject(Project project, EmployeeOnProject employeeOnProject){
+    public Project assignEmployeeToProject(Project project, EmployeeOnProject employeeOnProject){
         employeeOnProject.setProject(project);
         project.getEmployeeOnProjects().add(employeeOnProject);
         return repository.save(project);

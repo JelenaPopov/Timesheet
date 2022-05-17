@@ -64,7 +64,7 @@ function App() {
                 <Route key="default" path="*" element={<Navigate to="/" />} />
               </Routes>
             </div>
-            <ToastContainer />
+            <ToastContainer position = "top-center" />
           </div>
         </div>
       }

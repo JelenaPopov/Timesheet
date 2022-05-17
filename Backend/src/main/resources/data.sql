@@ -7,7 +7,7 @@ INSERT INTO category (deleted, persisted_at, updated_at, version, name) VALUES (
 INSERT INTO client (deleted, persisted_at, updated_at, version, first_name, last_name, country, city, street, postal_code)
 VALUES (0, now(), now(), 0, 'Milan', 'Jovic', 'Srbija', 'Novi Sad', 'Dositejeva', '400111');
 INSERT INTO client (deleted, persisted_at, updated_at, version, first_name, last_name, country, city, street, postal_code)
-VALUES (0, now(), now(), 0, 'Tamara', 'Savin', 'Srbija', 'Novi Sad', 'Dalmatinksa', '400112');
+VALUES (0, now(), now(), 0, 'Tamara', 'Savin', 'Srbija', 'Novi Sad', 'Dalmatinska', '400112');
 
 --USERS
 INSERT INTO user (deleted, persisted_at, updated_at, version, first_name, last_name, username, password, weekly_working_hours)

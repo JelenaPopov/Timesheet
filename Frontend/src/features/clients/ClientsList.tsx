@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import Table from '../../app/table/Table';
 import { AddClientModal } from './AddClientModal';
 import { EditClientModal } from './EditClientModal';
+import { DELETE_CLIENT_ERROR_MESSAGE } from '../../constants';
 
 export const ClientsList = () => {
     const [page, setPage] = useState(1);
@@ -27,9 +28,7 @@ export const ClientsList = () => {
         try {
             await deleteClient(client.id).unwrap()
         } catch (err) {
-            toast.error("Failed to delete the client!", {
-                position: toast.POSITION.TOP_CENTER
-            });
+            toast.error(DELETE_CLIENT_ERROR_MESSAGE);
         }
     }
 

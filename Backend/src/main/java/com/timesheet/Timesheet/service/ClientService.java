@@ -11,7 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class ClientService extends AbstractService<Client,Long>{
+public class ClientService implements GenericService<Client,Long> {
 
     private final ClientRepository repository;
 
@@ -35,13 +35,13 @@ public class ClientService extends AbstractService<Client,Long>{
         return repository.findAll(PageRequest.of(pageNo, pageSize));
     }
 
-    public List<Client> findAll(){
-        return repository.findAll();
-    }
-
     @Override
     public void delete(Client client) {
         client.setDeleted(true);
         repository.save(client);
+    }
+
+    public List<Client> findAll(){
+        return repository.findAll();
     }
 }

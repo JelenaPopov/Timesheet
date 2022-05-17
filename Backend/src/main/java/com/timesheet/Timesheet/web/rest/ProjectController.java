@@ -86,10 +86,10 @@ public class ProjectController {
     }
 
     @PostMapping("/{id}/employees")
-    public ResponseEntity<ProjectDTO> addEmployeeOnProject(@PathVariable Long id, @RequestBody @Validated EmployeeOnProjectDTO employeeOnProject) {
+    public ResponseEntity<ProjectDTO> assignEmployeeToProject(@PathVariable Long id, @RequestBody @Validated EmployeeOnProjectDTO employeeOnProject) {
         Project project = service.findById(id);
 
-        return new ResponseEntity<>(mapper.toDto(service.addEmployeeOnProject(project, employeeOnProjectMapper.toEntity(employeeOnProject, project.getId()))), HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.toDto(service.assignEmployeeToProject(project, employeeOnProjectMapper.toEntity(employeeOnProject, project.getId()))), HttpStatus.CREATED);
     }
 
     @GetMapping("/{projectId}/employees")
