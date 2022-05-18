@@ -1,5 +1,6 @@
 package com.timesheet.Timesheet.web.rest;
 
+import com.timesheet.Timesheet.domain.EmployeeOnProject;
 import com.timesheet.Timesheet.domain.Project;
 import com.timesheet.Timesheet.exception.RestrictRemoveException;
 import com.timesheet.Timesheet.service.EmployeeOnProjectService;
@@ -93,8 +94,15 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}/employees")
-    public ResponseEntity<List<EmployeeOnProjectDTO>> getEmployeesOnProject(@PathVariable Long projectId) {
-        return new ResponseEntity<>(employeeOnProjectMapper.toDto(employeeOnProjectService.getEmployeesOnProject(projectId)), HttpStatus.OK);
+    public ResponseEntity<List<EmployeeOnProjectDTO>> getEmployeesOnProject(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                                            @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                            @PathVariable Long projectId) {
+
+        Page<EmployeeOnProject> employeesOnProject = employeeOnProjectService.getEmployeesOnProject(pageNo, pageSize, projectId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Total-Pages", Integer.toString(employeesOnProject.getTotalPages()));
+
+        return new ResponseEntity<>(employeeOnProjectMapper.toDto(employeesOnProject.getContent()), headers, HttpStatus.OK);
     }
 
 }

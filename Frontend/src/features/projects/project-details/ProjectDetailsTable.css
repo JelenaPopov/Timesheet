@@ -53,3 +53,8 @@ td {
     color: white !important;
     margin-bottom: 8px !important;
 }
+
+.employee-on-project-td{
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+}

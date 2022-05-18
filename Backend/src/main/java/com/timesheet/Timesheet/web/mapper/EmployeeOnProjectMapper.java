@@ -38,7 +38,9 @@ public class EmployeeOnProjectMapper {
 
         model.setEmployee(userMapper.toEntity(dto.getEmployee()));
         model.setStartDate(getLocalDateTime(dto.getStartDate()));
-        model.setEndDate(getLocalDateTime(dto.getEndDate()));
+        if(!dto.getEndDate().isEmpty()){
+            model.setEndDate(getLocalDateTime(dto.getEndDate()));
+        }
 
         return model;
     }
@@ -49,7 +51,10 @@ public class EmployeeOnProjectMapper {
         dto.setId(model.getId().toString());
         dto.setEmployee(userMapper.toDto(model.getEmployee()));
         dto.setStartDate(model.getStartDate().toString());
-        dto.setEndDate(model.getEndDate().toString());
+        if(model.getEndDate() != null){
+            dto.setEndDate(model.getEndDate().toString());
+        }
+
         return dto;
     }
 

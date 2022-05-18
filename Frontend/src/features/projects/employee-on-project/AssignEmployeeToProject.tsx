@@ -20,7 +20,7 @@ export const AssignEmployeeToProject = (props: IProps) => {
     } = useGetAllUsersQuery(null);
 
     const onSaveProjectClicked = async () => {
-        if ([inputs.employee, inputs.startDate, inputs.endDate].every(Boolean)
+        if ([inputs.employee, inputs.startDate].every(Boolean)
             && inputs.employee !== '-1') {
             try {
                 const employee = users.find((el: User) => el.id === parseInt(inputs.employee));
@@ -40,7 +40,7 @@ export const AssignEmployeeToProject = (props: IProps) => {
     }
 
     const { inputs, handleInputChange, handleSubmit, handleResetForm } = useCustomForm(onSaveProjectClicked, { "employee": '-1', "startDate": "", "endDate": ""});
-    const canSave = [inputs.employee, inputs.startDate, inputs.endDate].every(Boolean) && inputs.employee !== '-1';
+    const canSave = [inputs.employee, inputs.startDate].every(Boolean) && inputs.employee !== '-1';
 
     const usersOptions =
         <>

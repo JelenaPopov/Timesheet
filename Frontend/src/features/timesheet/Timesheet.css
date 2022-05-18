@@ -1,0 +1,52 @@
+.current-mounth-container{
+    background-color: black;
+    padding: 6px 0px;
+}
+
+.current-month{
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.previous-month{
+    color: white !important;
+}
+
+.next-month{
+    color: white !important;
+}
+
+.timesheet-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.timesheet-header{
+    color: black;
+}
+
+.timesheet-table>thead>tr>th {
+    font-weight: 500;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    border: 0;
+    color: black;
+    padding: 12px 7px;
+    vertical-align: middle;
+    border: 1px solid black;
+    text-align: center;
+}
+
+
+.timesheet-table>tbody>tr>td {
+    color: black;
+    border: 1px solid black;
+}
+
+.timesheet-table>tbody>tr {
+    height: 100px;
+
+}

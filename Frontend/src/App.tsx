@@ -13,6 +13,7 @@ import { ProjectDetails } from "./features/projects/project-details/ProjectDetai
 
 function App() {
   const [activeTabVal, setActiveTab] = useState(Tabs.TIMESHEET);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const dispatch = useAppDispatch();
 
@@ -22,6 +23,7 @@ function App() {
     if ((!authInfo || !authInfo.token) && window.localStorage.getItem('token')) {
       dispatch(setNewValue(window.localStorage.getItem('token')));
     }
+    setLoading(false);
   }, [authInfo, dispatch]);
 
   useEffect(() => {
@@ -44,11 +46,11 @@ function App() {
   return (
     <div className="App">
       {
-        !authInfo.user && <><SignIn /></>
+        (!authInfo.user && !loading) && <><SignIn /></>
       }
 
       {
-        authInfo.user &&
+        (authInfo.user && !loading) &&
         <div className="row height-100 m-0">
           <div className="col-2 p-0">
             <Sidebar activeTab={activeTabVal} role={authInfo.user.roles[0]} signOutComponent={signOutComponent} />

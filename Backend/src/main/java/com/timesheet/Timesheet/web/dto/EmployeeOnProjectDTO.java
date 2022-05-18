@@ -21,6 +21,5 @@ public class EmployeeOnProjectDTO {
     @NotBlank
     private String startDate;
 
-    @NotBlank
     private String endDate;
 }
