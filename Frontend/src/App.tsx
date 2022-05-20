@@ -59,7 +59,7 @@ function App() {
             <div className="p-3 header-container border-bottom">
               <span className="header-title">{activeTabVal}</span>
             </div>
-            <div className="p-5">
+            <div className="main-container">
               <Routes>
                 {routeItems}
                 <Route key="projectInfo" path="/projects/:projectId" element={<ProjectDetails/>} />

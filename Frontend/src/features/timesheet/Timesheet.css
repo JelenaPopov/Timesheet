@@ -1,52 +1,109 @@
-.current-mounth-container{
+.current-month-container {
     background-color: black;
     padding: 6px 0px;
 }
 
 .current-month{
-    font-size: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 22px;
     color: white;
 }
 
-.previous-month{
-    color: white !important;
+.previous-month-btn {
+    background-color: black;
+    border: none;
 }
 
-.next-month{
-    color: white !important;
+.previous-month-icon {
+    color: white;
+    font-size: 25px;
+}
+
+.next-month-btn {
+    background-color: black;
+    border: none;
+    float: right;
+}
+
+.next-month-icon {
+    color: white;
+    font-size: 25px;
 }
 
 .timesheet-table {
+    margin-top: 15px;
     width: 100%;
     table-layout: fixed;
+    border: 0px;
 }
 
-.timesheet-header{
+.timesheet-header {
     color: black;
 }
 
 .timesheet-table>thead>tr>th {
-    font-weight: 500;
+    font-weight: 600;
     padding-bottom: 0;
     text-transform: uppercase;
-    border: 0;
     color: black;
     padding: 12px 7px;
     vertical-align: middle;
-    border: 1px solid black;
     text-align: center;
 }
 
 
 .timesheet-table>tbody>tr>td {
     color: black;
-    border: 1px solid black;
+    border: 1px solid #BDBDBD;
 }
 
-.timesheet-table>tbody>tr {
-    height: 100px;
+.week-day-number {
+    height: 40%;
+    padding: 5px;
+}
 
+.week-day-hours{
+    height: 60%;
+    padding: 5px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    padding: 10px 5px;
+    font-size:15px;
+}
+
+.white-week-day-hours {
+    background-color: white;
+}
+
+.green-week-day-hours {
+    background-color: rgb(246, 249, 230);
+}
+
+.red-week-day-hours {
+    background-color: rgb(249, 230, 230);
+}
+
+.disabled-week-day-hours {
+    background-color: rgb(236, 236, 236);
+}
+
+.week-day {
+    height: inherit;
+    padding: 0px;
+}
+
+.disabled-week-day {
+    height: inherit;
+    background-color: rgb(236, 236, 236);
+}
+
+.total-hours-container{
+    padding: 15px 15px 6px 15px !important;
+}
+
+.total-hours {
+    font-size: 20px;
+    float: right;
 }

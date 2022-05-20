@@ -10,13 +10,38 @@ export const TimeSheet = () => {
     const weeks = [];
     let weekDays = [];
     for (let i = 1; i < 36; i++) {
-      weekDays.push(
-        <td key={i}>
-          <div className="week-day-number">{i}</div>
-          <div className="week-day-hours">Hours: 0</div>
-        </td>
-      );
-      if(i % 7 === 0 && i !== 0){
+      let val = i + ".";
+      if (i === 34 || i === 35) {
+        weekDays.push(
+          <td key={i} className="disabled-week-day">
+            <div className="week-day-number">{val}</div>
+            <div className="week-day-hours disabled-week-day-hours">Hours: 0</div>
+          </td>
+        );
+      } else if (i === 23 || i === 24 || i === 15) {
+        weekDays.push(
+          <td key={i} className="week-day">
+            <div className="week-day-number">{val}</div>
+            <div className="week-day-hours white-week-day-hours">Hours: 0</div>
+          </td>
+        );
+      } else if (i % 9 !== 0) {
+        weekDays.push(
+          <td key={i} className="week-day">
+            <div className="week-day-number">{val}</div>
+            <div className="week-day-hours green-week-day-hours">Hours: 0</div>
+          </td>
+        );
+      } else {
+        weekDays.push(
+          <td key={i} className="week-day">
+            <div className="week-day-number">{val}</div>
+            <div className="week-day-hours red-week-day-hours">Hours: 0</div>
+          </td>
+        );
+      }
+
+      if (i % 7 === 0 && i !== 0) {
         weeks.push(
           <tr key={i}>{weekDays}</tr>
         );
@@ -32,16 +57,24 @@ export const TimeSheet = () => {
         <h4 className="card-title">Timesheet</h4>
       </div>
       <div className="card-body">
-        <div className="container current-mounth-container">
+        <div className="container current-month-container">
           <div className="row">
-            <div className="col-2">
-              <button className="btn bold previous-month" onClick={() => { }}>&lt; Previous mounth</button>
+            <div className="col-4">
+              <button className="previous-month-btn" onClick={() => { }} title="Previous month">
+                <i
+                  className="bi bi-arrow-left-circle previous-month-icon">
+                </i>
+              </button>
             </div>
-            <div className="col-8">
-              <span className="current-month bold">{currentDate.format('MMM').toUpperCase()}</span>
+            <div className="col-4 current-month bold">
+              {currentDate.format('MMM').toUpperCase()} &nbsp;{currentDate.format('YYYY').toUpperCase()}
             </div>
-            <div className="col-2">
-              <button className="btn bold next-btn next-month" onClick={() => { }}>Next mounth &gt;</button>
+            <div className="col-4">
+              <button className="next-month-btn" onClick={() => { }} title="Next month">
+                <i
+                  className="bi bi-arrow-right-circle next-month-icon">
+                </i>
+              </button>
             </div>
           </div>
         </div>
@@ -61,7 +94,16 @@ export const TimeSheet = () => {
             {renderDays()}
           </tbody>
         </table>
-
+        <div className="container total-hours-container">
+          <div className="row">
+            <div className="col-10">
+              &nbsp;
+            </div>
+            <div className="col-2">
+              <span className="total-hours bold">Total hours: 90</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

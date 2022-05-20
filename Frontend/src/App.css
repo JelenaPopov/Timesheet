@@ -11,3 +11,7 @@
     padding-bottom: 0.5rem;
     line-height: 1.625rem;
 }
+
+.main-container{
+    padding: 35px 65px 35px 65px;
+}
