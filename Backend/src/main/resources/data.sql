@@ -47,13 +47,13 @@ INSERT INTO employee_on_project (project_id, employee_id, start_date, end_date)
 VALUES (1, 4, '2022-01-01','2023-01-01');
 
 --LOGGED HOURS
-INSERT INTO logged_hours (deleted, persisted_at, updated_at, version, user_id, project_id, category_id, description, hours)
-VALUES (0, '2022-04-25', '2022-04-25', 0, 1, 1, 1, 'Create initial Spring project.', 2);
-INSERT INTO logged_hours (deleted, persisted_at, updated_at, version, user_id, project_id, category_id, description, hours)
-VALUES (0, '2022-04-25', '2022-04-25', 0, 1, 1, 2, 'Create initial Angular project.', 1);
+INSERT INTO logged_hours (deleted, persisted_at, updated_at, version, user_id, project_id, category_id, description, hours, created)
+VALUES (0, '2022-04-25', '2022-04-25', 0, 1, 1, 1, 'Create initial Spring project.', 2, '2022-04-25');
+INSERT INTO logged_hours (deleted, persisted_at, updated_at, version, user_id, project_id, category_id, description, hours, created)
+VALUES (0, '2022-04-25', '2022-04-25', 0, 1, 1, 2, 'Create initial Angular project.', 1, '2022-04-25');
 
-INSERT INTO logged_hours (deleted, persisted_at, updated_at, version, user_id, project_id, category_id, description, hours)
-VALUES (0, '2022-05-04', '2022-05-04', 0, 1, 1, 1, 'Implement Spring security.', 4);
+INSERT INTO logged_hours (deleted, persisted_at, updated_at, version, user_id, project_id, category_id, description, hours, created)
+VALUES (0, '2022-05-04', '2022-05-04', 0, 1, 1, 1, 'Implement Spring security.', 4, '2022-05-04');
 
-INSERT INTO logged_hours (deleted, persisted_at, updated_at, version, user_id, project_id, category_id, description, hours)
-VALUES (0, '2022-05-06', '2022-05-06', 0, 1, 1, 2, 'Create register form and login form.', 3);
+INSERT INTO logged_hours (deleted, persisted_at, updated_at, version, user_id, project_id, category_id, description, hours, created)
+VALUES (0, '2022-05-06', '2022-05-06', 0, 1, 1, 2, 'Create register form and login form.', 3, '2022-05-06');

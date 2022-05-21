@@ -15,6 +15,10 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ['Categories']
     }),
+    getAllCategories: builder.query({
+      query: () => `/categories/all`,
+      providesTags: ['Categories']
+    }),
     getCategory: builder.query({
       query: (postId) => `/categories/${postId}`,
       providesTags: ['Categories']
@@ -47,6 +51,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetCategoriesQuery,
+  useGetAllCategoriesQuery,
   useGetCategoryQuery,
   useAddNewCategoryMutation,
   useEditCategoryMutation,

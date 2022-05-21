@@ -10,6 +10,7 @@ import { SignOut } from "./features/auth/sign-out/SignOut";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { setNewValue } from "./features/auth/authSlice";
 import { ProjectDetails } from "./features/projects/project-details/ProjectDetails";
+import { LoggedHoursList } from "./features/logged-hours/LoggedHoursList";
 
 function App() {
   const [activeTabVal, setActiveTab] = useState(Tabs.TIMESHEET);
@@ -62,6 +63,7 @@ function App() {
             <div className="main-container">
               <Routes>
                 {routeItems}
+                <Route key="loggedHours" path="/logged-hours" element={<LoggedHoursList/>} />
                 <Route key="projectInfo" path="/projects/:projectId" element={<ProjectDetails/>} />
                 <Route key="default" path="*" element={<Navigate to="/" />} />
               </Routes>

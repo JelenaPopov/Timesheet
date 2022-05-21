@@ -37,7 +37,7 @@ export interface UserLogin {
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['Categories', 'Clients', 'Projects', 'Users', 'Employees on Project'],
+  tagTypes: ['Categories', 'Clients', 'Projects','User Projects', 'Users', 'Employees on Project', 'Logged Hours'],
   endpoints: (builder) => ({
     signIn: builder.mutation<{ token: string | undefined | null }, UserLogin>({
       query: (userLoginInfo: UserLogin) => ({

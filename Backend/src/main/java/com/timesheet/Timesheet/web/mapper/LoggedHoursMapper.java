@@ -7,6 +7,9 @@ import com.timesheet.Timesheet.web.dto.LoggedHoursDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,6 +51,7 @@ public class LoggedHoursMapper  extends DefaultMapper<LoggedHoursDTO, LoggedHour
         }
         model.setDescription(dto.getDescription());
         model.setHours(dto.getHours());
+        model.setCreated(getLocalDate(dto.getCreated()));
         super.toEntity(dto,model);
         return model;
     }
@@ -70,6 +74,7 @@ public class LoggedHoursMapper  extends DefaultMapper<LoggedHoursDTO, LoggedHour
     public LoggedHoursDTO toMinimalDto(LoggedHours model){
         LoggedHoursDTO dto = new LoggedHoursDTO();
         dto.setHours(model.getHours());
+        dto.setCreated(model.getCreated().toString());
         super.toDTO(model,dto);
         return dto;
     }
@@ -80,5 +85,10 @@ public class LoggedHoursMapper  extends DefaultMapper<LoggedHoursDTO, LoggedHour
 
     public List<LoggedHoursDTO> toMinimalDto(Collection<LoggedHours> models) {
         return models.stream().map(this::toMinimalDto).collect(Collectors.toList());
+    }
+
+    private LocalDate getLocalDate(String date) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(date, formatter);
     }
 }

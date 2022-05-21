@@ -128,6 +128,7 @@ CREATE TABLE logged_hours (
     category_id BIGINT,
     description VARCHAR (255) NOT NULL,
     hours DOUBLE,
+    created DATE,
     PRIMARY KEY (id)
 );
 

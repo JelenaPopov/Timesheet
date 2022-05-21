@@ -28,6 +28,10 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ['Projects']
     }),
+    getAllUserProjects: builder.query({
+      query: () => `/projects/filtered-by-employee`,
+      providesTags: ['User Projects']
+    }),
     getProject: builder.query({
       query: (postId) => `/projects/${postId}`,
       providesTags: ['Projects']
@@ -38,7 +42,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: initialProject,
       }),
-      invalidatesTags: ['Projects']
+      invalidatesTags: ['Projects', 'User Projects']
     }),
     editProject: builder.mutation({
       query: (category) => ({
@@ -46,14 +50,14 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body: category,
       }),
-      invalidatesTags: ['Projects']
+      invalidatesTags: ['Projects', 'User Projects']
     }),
     deleteProject: builder.mutation({
       query: (id) => ({
         url: `projects/${id}`,
         method: 'DELETE'
       }),
-      invalidatesTags: ['Projects']
+      invalidatesTags: ['Projects', 'User Projects']
     }),
     assignEmployeeToProject: builder.mutation({
       query: (data: EmployeeOnProject) => ({
@@ -75,6 +79,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetProjectsQuery,
+  useGetAllUserProjectsQuery,
   useGetProjectQuery,
   useAddNewProjectMutation,
   useEditProjectMutation,

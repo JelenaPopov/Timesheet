@@ -21,7 +21,8 @@ export const Timesheet = () => {
   }
 
   const onViewLogs = (day: Moment) => {
-    //navigate(`/projects/${projectId}`);
+    const dayValue = day.format("yyyy-MM-DD");
+    navigate(`/logged-hours?day=${dayValue}`);
   }
 
   const renderDays = () => {

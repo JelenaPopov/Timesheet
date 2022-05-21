@@ -37,9 +37,9 @@ public class EmployeeOnProjectMapper {
         EmployeeOnProject model = employee.orElseGet(EmployeeOnProject::new);
 
         model.setEmployee(userMapper.toEntity(dto.getEmployee()));
-        model.setStartDate(getLocalDateTime(dto.getStartDate()));
+        model.setStartDate(getLocalDate(dto.getStartDate()));
         if(!dto.getEndDate().isEmpty()){
-            model.setEndDate(getLocalDateTime(dto.getEndDate()));
+            model.setEndDate(getLocalDate(dto.getEndDate()));
         }
 
         return model;
@@ -62,7 +62,7 @@ public class EmployeeOnProjectMapper {
         return models.stream().map(this::toDto).collect(Collectors.toList());
     }
 
-    private LocalDate getLocalDateTime(String date) throws DateTimeParseException {
+    private LocalDate getLocalDate(String date) throws DateTimeParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(date, formatter);
     }

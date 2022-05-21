@@ -25,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @RestController
@@ -46,9 +49,10 @@ public class LoggedHoursController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LoggedHoursDTO>> findAll(@RequestParam(defaultValue = "0") Integer pageNo,
-                                                        @RequestParam(defaultValue = "10") Integer pageSize) {
-        Page<LoggedHours> loggedHours = service.findAll(pageNo, pageSize);
+    public ResponseEntity<List<LoggedHoursDTO>> findAllUserLogs(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                        @RequestParam(defaultValue = "10") Integer pageSize,
+                                                        @RequestParam String created) {
+        Page<LoggedHours> loggedHours = service.findAllUserLogs(pageNo, pageSize, getLocalDate(created), userService.getLoggedInUser().getId());
         HttpHeaders headers = new HttpHeaders();
         headers.add("Total-Pages", Integer.toString(loggedHours.getTotalPages()));
 
@@ -75,5 +79,10 @@ public class LoggedHoursController {
     public ResponseEntity<?> deleteOne(@PathVariable Long id) throws IllegalArgumentException {
         service.delete(service.findById(id));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    private LocalDate getLocalDate(String date) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(date, formatter);
     }
 }

@@ -23,4 +23,6 @@ public class LoggedHoursDTO extends AbstractDTO {
     @NotNull
     @Positive
     private Double hours;
+
+    private String created;
 }
