@@ -13,7 +13,8 @@ interface UserInfo {
     created: string,
     exp: string,
     roles: string[],
-    sub: string
+    sub: string,
+    weeklyWorkingHours: number
 }
 
 interface TokenState {

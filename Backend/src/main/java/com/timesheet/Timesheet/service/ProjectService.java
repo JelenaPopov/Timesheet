@@ -51,4 +51,8 @@ public class ProjectService implements GenericService<Project,Long> {
         project.getEmployeeOnProjects().add(employeeOnProject);
         return repository.save(project);
     }
+
+    public List<Project> findAllLoggedInUserProjects(Long userId){
+        return repository.findAllLoggedInUserProjects(userId);
+    }
 }

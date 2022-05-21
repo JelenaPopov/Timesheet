@@ -1,3 +1,13 @@
+ALTER TABLE project DROP FOREIGN KEY FK_project_client_id;
+ALTER TABLE project DROP FOREIGN KEY FK_project_team_lead_id;
+
+ALTER TABLE employee_on_project DROP FOREIGN KEY FK_employee_on_project_project_id;
+ALTER TABLE employee_on_project DROP FOREIGN KEY FK_employee_on_project_employee_id;
+
+ALTER TABLE logged_hours DROP FOREIGN KEY FK_logged_hours_user_id;
+ALTER TABLE logged_hours DROP FOREIGN KEY FK_logged_hours_project_id;
+ALTER TABLE logged_hours DROP FOREIGN KEY FK_logged_hours_category_id;
+
 DROP TABLE IF EXISTS category;
 
 CREATE TABLE category (
@@ -9,9 +19,6 @@ CREATE TABLE category (
     name VARCHAR (255) UNIQUE NOT NULL,
     PRIMARY KEY (id)
 );
-
-ALTER TABLE project DROP FOREIGN KEY FK_project_client_id;
-ALTER TABLE project DROP FOREIGN KEY FK_project_team_lead_id;
 
 DROP TABLE IF EXISTS client;
 
@@ -104,3 +111,26 @@ CREATE TABLE employee_on_project (
     end_date date,
     PRIMARY KEY (project_id, employee_id)
 );
+
+ALTER TABLE employee_on_project ADD CONSTRAINT FK_employee_on_project_project_id FOREIGN KEY (project_id) REFERENCES project (id);
+ALTER TABLE employee_on_project ADD CONSTRAINT FK_employee_on_project_employee_id FOREIGN KEY (employee_id) REFERENCES user (id);
+
+DROP TABLE IF EXISTS logged_hours;
+
+CREATE TABLE logged_hours (
+    id BIGINT NOT NULL auto_increment,
+    deleted BIT,
+    persisted_at DATETIME,
+    updated_at DATETIME,
+    version INTEGER NOT NULL,
+    user_id BIGINT,
+    project_id BIGINT,
+    category_id BIGINT,
+    description VARCHAR (255) NOT NULL,
+    hours DOUBLE,
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE logged_hours ADD CONSTRAINT FK_logged_hours_user_id FOREIGN KEY (user_id) REFERENCES user (id);
+ALTER TABLE logged_hours ADD CONSTRAINT FK_logged_hours_project_id FOREIGN KEY (project_id) REFERENCES project (id);
+ALTER TABLE logged_hours ADD CONSTRAINT FK_logged_hours_category_id FOREIGN KEY (category_id) REFERENCES category (id);

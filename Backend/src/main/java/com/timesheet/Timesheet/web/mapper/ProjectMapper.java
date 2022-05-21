@@ -31,14 +31,7 @@ public class ProjectMapper extends DefaultMapper<ProjectDTO, Project> {
             return null;
         }
 
-        Project model;
-        if(dto.getId()!=null){
-            model = service.findById(dto.getId());
-        }
-        else{
-            model = new Project();
-        }
-
+        Project model = toMinimalEntity(dto);
         model.setName(dto.getName());
         model.setDescription(dto.getDescription());
         if(dto.getClient() != null){
@@ -47,14 +40,27 @@ public class ProjectMapper extends DefaultMapper<ProjectDTO, Project> {
         if(dto.getTeamLead() != null){
             model.setTeamLead(userMapper.toEntity(dto.getTeamLead()));
         }
+        return model;
+    }
 
+    public Project toMinimalEntity(ProjectDTO dto){
+        if(dto == null){
+            return null;
+        }
+
+        Project model;
+        if(dto.getId()!=null){
+            model = service.findById(dto.getId());
+        }
+        else{
+            model = new Project();
+        }
         super.toEntity(dto,model);
         return model;
     }
 
     public ProjectDTO toDto(Project model){
-        ProjectDTO dto = new ProjectDTO();
-        dto.setName(model.getName());
+        ProjectDTO dto = toMinimalDto(model);
         dto.setDescription(model.getDescription());
         if(model.getClient() != null){
             dto.setClient(clientMapper.toDto(model.getClient()));
@@ -62,12 +68,21 @@ public class ProjectMapper extends DefaultMapper<ProjectDTO, Project> {
         if(model.getTeamLead() != null){
             dto.setTeamLead(userMapper.toDto(model.getTeamLead()));
         }
+        return dto;
+    }
 
+    public ProjectDTO toMinimalDto(Project model){
+        ProjectDTO dto = new ProjectDTO();
+        dto.setName(model.getName());
         super.toDTO(model,dto);
         return dto;
     }
 
     public List<ProjectDTO> toDto(Collection<Project> models) {
         return models.stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    public List<ProjectDTO> toMinimalDto(Collection<Project> models) {
+        return models.stream().map(this::toMinimalDto).collect(Collectors.toList());
     }
 }

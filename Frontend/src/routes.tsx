@@ -1,7 +1,7 @@
 import { CategoriesList } from "./features/categories/CategoriesList";
 import { ClientsList } from "./features/clients/ClientsList";
 import { ProjectsList } from "./features/projects/ProjectsList";
-import { TimeSheet } from "./features/timesheet/Timesheet";
+import { Timesheet } from "./features/timesheet/Timesheet";
 
 export enum Tabs {
     TIMESHEET = "Timesheet",
@@ -21,7 +21,7 @@ var routes = [
         name: "Timesheet",
         key: Tabs.TIMESHEET,
         icon: "bi bi-calendar2-check icon",
-        component: <TimeSheet/>,
+        component: <Timesheet/>,
         roles: [Roles.ADMIN, Roles.EMPLOYEE]
     },
     {

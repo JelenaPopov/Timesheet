@@ -17,7 +17,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,7 +43,7 @@ public class UserService implements GenericService<User,Long>, UserDetailsServic
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException(
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(
                 String.format("No user found with username '%s'.", username)));
         List<GrantedAuthority> grantedAuthorities = user.getUserRoles().stream().map(UserRole::getRole)
                 .map(authority -> new SimpleGrantedAuthority(authority.getName()))
@@ -52,6 +53,11 @@ public class UserService implements GenericService<User,Long>, UserDetailsServic
                 user.getUsername(),
                 user.getPassword(),
                 grantedAuthorities);
+    }
+
+    public User findByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(
+                String.format("No user found with username '%s'.", username)));
     }
 
     @Override
@@ -73,6 +79,14 @@ public class UserService implements GenericService<User,Long>, UserDetailsServic
     public void delete(User user) {
         user.setDeleted(true);
         userRepository.save(user);
+    }
+
+    public User getLoggedInUser() {
+        Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+        if (currentUser == null) {
+            return null;
+        }
+        return userRepository.findByUsername(currentUser.getName()).orElseThrow(EntityNotFoundException::new);
     }
 
     public List<User> findAll(){

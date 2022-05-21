@@ -1,0 +1,49 @@
+.week-day {
+    height: inherit;
+    padding: 0px;
+}
+
+.disabled-week-day {
+    height: inherit;
+    background-color: rgb(236, 236, 236);
+}
+
+.week-day-hours {
+    height: 60%;
+    padding: 5px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    padding: 10px 5px;
+    font-size: 15px;
+}
+
+.week-day-number {
+    height: 40%;
+    padding: 5px;
+}
+
+.white-week-day-hours {
+    background-color: white;
+}
+
+.green-week-day-hours {
+    background-color: rgb(246, 249, 230);
+}
+
+.red-week-day-hours {
+    background-color: rgb(249, 230, 230);
+}
+
+.disabled-week-day-hours {
+    background-color: rgb(236, 236, 236);
+}
+
+.hours-btn {
+    padding: 0px !important;
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.disabled{
+    opacity: .65;
+}

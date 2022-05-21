@@ -2,6 +2,7 @@ package com.timesheet.Timesheet.web.rest;
 
 import com.timesheet.Timesheet.domain.EmployeeOnProject;
 import com.timesheet.Timesheet.domain.Project;
+import com.timesheet.Timesheet.domain.user.User;
 import com.timesheet.Timesheet.exception.RestrictRemoveException;
 import com.timesheet.Timesheet.service.EmployeeOnProjectService;
 import com.timesheet.Timesheet.service.ProjectService;
@@ -31,7 +32,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/projects")
-@PreAuthorize("hasAnyRole('ADMIN')")
 public class ProjectController {
 
     private final ProjectService service;
@@ -42,15 +42,20 @@ public class ProjectController {
 
     private final EmployeeOnProjectService employeeOnProjectService;
 
+    private final UserService userService;
+
     @Autowired
-    public ProjectController(ProjectService service, ProjectMapper mapper, EmployeeOnProjectMapper employeeOnProjectMapper, EmployeeOnProjectService employeeOnProjectService) {
+    public ProjectController(ProjectService service, ProjectMapper mapper, EmployeeOnProjectMapper employeeOnProjectMapper,
+                             EmployeeOnProjectService employeeOnProjectService, UserService userService) {
         this.service = service;
         this.mapper = mapper;
         this.employeeOnProjectMapper = employeeOnProjectMapper;
         this.employeeOnProjectService = employeeOnProjectService;
+        this.userService = userService;
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<List<ProjectDTO>> findAll(@RequestParam(defaultValue = "0") Integer pageNo,
                                                     @RequestParam(defaultValue = "10") Integer pageSize) {
         Page<Project> projects = service.findAll(pageNo, pageSize);
@@ -61,22 +66,26 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<ProjectDTO> findOne(@PathVariable long id) {
         return new ResponseEntity<>(mapper.toDto(service.findById(id)), HttpStatus.OK);
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<ProjectDTO> save(@RequestBody @Validated ProjectDTO dto) {
         return new ResponseEntity<>(mapper.toDto(service.save(mapper.toEntity(dto))), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<ProjectDTO> update(@PathVariable long id, @RequestBody  ProjectDTO dto) {
         dto.setId(id);
         return new ResponseEntity<>(mapper.toDto(service.save(mapper.toEntity(dto))), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<?> deleteOne(@PathVariable Long id) throws IllegalArgumentException, RestrictRemoveException {
         if(!employeeOnProjectService.getEmployeesOnProject(id).isEmpty()){
             throw new RestrictRemoveException("Delete forbidden!");
@@ -86,7 +95,15 @@ public class ProjectController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/filtered-by-employee")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+    public ResponseEntity<List<ProjectDTO>> findAllLoggedInUserProjects() {
+        User user = userService.getLoggedInUser();
+        return new ResponseEntity<>(mapper.toMinimalDto(service.findAllLoggedInUserProjects(user.getId())), HttpStatus.OK);
+    }
+
     @PostMapping("/{id}/employees")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<ProjectDTO> assignEmployeeToProject(@PathVariable Long id, @RequestBody @Validated EmployeeOnProjectDTO employeeOnProject) {
         Project project = service.findById(id);
 
@@ -94,6 +111,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}/employees")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<List<EmployeeOnProjectDTO>> getEmployeesOnProject(@RequestParam(defaultValue = "0") Integer pageNo,
                                                                             @RequestParam(defaultValue = "10") Integer pageSize,
                                                                             @PathVariable Long projectId) {
@@ -104,5 +122,4 @@ public class ProjectController {
 
         return new ResponseEntity<>(employeeOnProjectMapper.toDto(employeesOnProject.getContent()), headers, HttpStatus.OK);
     }
-
 }

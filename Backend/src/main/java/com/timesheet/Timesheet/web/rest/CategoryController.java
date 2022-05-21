@@ -3,6 +3,7 @@ package com.timesheet.Timesheet.web.rest;
 import com.timesheet.Timesheet.domain.Category;
 import com.timesheet.Timesheet.service.CategoryService;
 import com.timesheet.Timesheet.web.dto.CategoryDTO;
+import com.timesheet.Timesheet.web.dto.ClientDTO;
 import com.timesheet.Timesheet.web.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,7 +26,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/categories")
-@PreAuthorize("hasAnyRole('ADMIN')")
 public class CategoryController {
 
     private final CategoryService service;
@@ -39,6 +39,7 @@ public class CategoryController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<List<CategoryDTO>> findAll(@RequestParam(defaultValue = "0") Integer pageNo,
                                                      @RequestParam(defaultValue = "10") Integer pageSize) {
         Page<Category> categories = service.findAll(pageNo, pageSize);
@@ -48,23 +49,33 @@ public class CategoryController {
         return new ResponseEntity<>(mapper.toDto(categories.getContent()),headers,HttpStatus.OK);
     }
 
+    @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
+    public ResponseEntity<List<CategoryDTO>> findAll() {
+        return new ResponseEntity<>(mapper.toDto(service.findAll()), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CategoryDTO> findOne(@PathVariable long id) {
         return new ResponseEntity<>(mapper.toDto(service.findById(id)), HttpStatus.OK);
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CategoryDTO> save(@RequestBody @Validated CategoryDTO dto) {
         return new ResponseEntity<>(mapper.toDto(service.save(mapper.toEntity(dto))), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CategoryDTO> update(@PathVariable long id, @RequestBody  CategoryDTO dto) {
         dto.setId(id);
         return new ResponseEntity<>(mapper.toDto(service.save(mapper.toEntity(dto))), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<?> deleteOne(@PathVariable Long id) throws IllegalArgumentException {
         service.delete(service.findById(id));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

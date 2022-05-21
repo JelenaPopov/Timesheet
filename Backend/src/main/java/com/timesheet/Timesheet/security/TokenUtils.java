@@ -1,9 +1,13 @@
 package com.timesheet.Timesheet.security;
 
+import com.timesheet.Timesheet.domain.user.User;
+import com.timesheet.Timesheet.domain.user.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -73,14 +77,21 @@ public class TokenUtils {
                 && !isTokenExpired(token) && (rolesFromToken.equals(rolesFromAuthority) || path.equals("/api/refresh"));
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<String, Object>();
-        claims.put("sub", userDetails.getUsername());
+        claims.put("sub", user.getUsername());
         claims.put("created", new Date(System.currentTimeMillis()));
-        claims.put("roles", userDetails.getAuthorities()
+        List<GrantedAuthority> grantedAuthorities = user.getUserRoles().stream().map(UserRole::getRole)
+                .map(authority -> new SimpleGrantedAuthority(authority.getName()))
+                .collect(Collectors.toList());
+
+        claims.put("roles", grantedAuthorities
                 .stream()
                 .map(a -> (a.getAuthority().substring(5).toLowerCase()))
                 .collect(Collectors.toList()));
+        claims.put("name", user.getUsername());
+        claims.put("weeklyWorkingHours", user.getWeeklyWorkingHours());
+
         return Jwts.builder().setClaims(claims)
                 .setExpiration(generateExpirationDate())
                 .signWith(SignatureAlgorithm.HS512, secret).compact();

@@ -53,50 +53,9 @@
     text-align: center;
 }
 
-
 .timesheet-table>tbody>tr>td {
     color: black;
     border: 1px solid #BDBDBD;
-}
-
-.week-day-number {
-    height: 40%;
-    padding: 5px;
-}
-
-.week-day-hours{
-    height: 60%;
-    padding: 5px;
-    vertical-align: middle;
-    box-sizing: border-box;
-    padding: 10px 5px;
-    font-size:15px;
-}
-
-.white-week-day-hours {
-    background-color: white;
-}
-
-.green-week-day-hours {
-    background-color: rgb(246, 249, 230);
-}
-
-.red-week-day-hours {
-    background-color: rgb(249, 230, 230);
-}
-
-.disabled-week-day-hours {
-    background-color: rgb(236, 236, 236);
-}
-
-.week-day {
-    height: inherit;
-    padding: 0px;
-}
-
-.disabled-week-day {
-    height: inherit;
-    background-color: rgb(236, 236, 236);
 }
 
 .total-hours-container{

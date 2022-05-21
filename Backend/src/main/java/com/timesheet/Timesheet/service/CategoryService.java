@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 public class CategoryService implements GenericService<Category,Long> {
@@ -38,5 +39,9 @@ public class CategoryService implements GenericService<Category,Long> {
     public void delete(Category category) {
         category.setDeleted(true);
         repository.save(category);
+    }
+
+    public List<Category> findAll(){
+        return repository.findAll();
     }
 }

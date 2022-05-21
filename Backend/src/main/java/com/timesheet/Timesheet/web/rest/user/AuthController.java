@@ -1,5 +1,6 @@
 package com.timesheet.Timesheet.web.rest.user;
 
+import com.timesheet.Timesheet.domain.user.User;
 import com.timesheet.Timesheet.security.ApplicationProperties;
 import com.timesheet.Timesheet.security.TokenUtils;
 import com.timesheet.Timesheet.service.user.UserService;
@@ -43,10 +44,10 @@ public class AuthController {
                     user.username, user.password);
             authenticationManager.authenticate(token);
 
-            UserDetails details = userService.loadUserByUsername(user.username);
+            User dbUser = userService.findByUsername(user.username);
 
             HttpHeaders headers = new HttpHeaders();
-            headers.set(properties.JWT_HEADER, tokenUtils.generateToken(details));
+            headers.set(properties.JWT_HEADER, tokenUtils.generateToken(dbUser));
 
             return ResponseEntity.ok().headers(headers).build();
         } catch (Exception ex) {

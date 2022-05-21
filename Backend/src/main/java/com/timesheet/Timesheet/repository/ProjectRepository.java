@@ -36,4 +36,13 @@ public interface ProjectRepository extends JpaRepository<Project,Long> {
             "left join fetch project.client client " +
             "where client.id = :clientId")
     List<Project> findClientProjects(@Param("clientId") Long clientId);
+
+    @Query("select distinct project " +
+            "from Project project " +
+            "left join fetch project.teamLead teamLead " +
+            "left join fetch project.employeeOnProjects employeeOnProjects " +
+            "left join fetch employeeOnProjects.employee employee " +
+            "where (employee.id = :userId and (employeeOnProjects.endDate is null or employeeOnProjects.endDate >= NOW())  and (employeeOnProjects.startDate <= NOW())) " +
+            "or (teamLead.id = :userId)")
+    List<Project> findAllLoggedInUserProjects(@Param("userId") Long userId);
 }
