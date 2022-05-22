@@ -3,7 +3,6 @@ package com.timesheet.Timesheet.domain;
 import com.timesheet.Timesheet.domain.user.User;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;

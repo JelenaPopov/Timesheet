@@ -3,7 +3,6 @@ package com.timesheet.Timesheet.web.rest;
 import com.timesheet.Timesheet.domain.Category;
 import com.timesheet.Timesheet.service.CategoryService;
 import com.timesheet.Timesheet.web.dto.CategoryDTO;
-import com.timesheet.Timesheet.web.dto.ClientDTO;
 import com.timesheet.Timesheet.web.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

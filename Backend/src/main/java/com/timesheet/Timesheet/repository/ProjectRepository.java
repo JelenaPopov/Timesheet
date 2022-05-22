@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +43,7 @@ public interface ProjectRepository extends JpaRepository<Project,Long> {
             "left join fetch project.teamLead teamLead " +
             "left join fetch project.employeeOnProjects employeeOnProjects " +
             "left join fetch employeeOnProjects.employee employee " +
-            "where (employee.id = :userId and (employeeOnProjects.endDate is null or employeeOnProjects.endDate >= NOW())  and (employeeOnProjects.startDate <= NOW())) " +
+            "where (employee.id = :userId and (employeeOnProjects.endDate is null or employeeOnProjects.endDate >= :date)  and (employeeOnProjects.startDate <= :date)) " +
             "or (teamLead.id = :userId)")
-    List<Project> findAllLoggedInUserProjects(@Param("userId") Long userId);
+    List<Project> findAllLoggedInUserProjects(@Param("userId") Long userId, @Param("date") LocalDate date);
 }

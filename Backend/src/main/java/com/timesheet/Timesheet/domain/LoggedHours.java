@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Where(clause= "deleted = 'false'")

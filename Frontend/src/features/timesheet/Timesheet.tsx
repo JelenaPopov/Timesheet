@@ -4,20 +4,28 @@ import moment, { Moment } from 'moment';
 import { TimesheetDay } from './TimesheetDay/TimesheetDay';
 import { useAppSelector } from '../../app/hooks';
 import { useNavigate } from 'react-router-dom';
+import { MonthWithLoggedHours } from './MonthWithLoggedHours/MonthWithLoggedHours';
 
 export const Timesheet = () => {
   const navigate = useNavigate();
-  const currentDate= useState(moment())[0];
+  const currentDate = useState(moment())[0];
   const [selectedMonth, setSelectedMonth] = useState(moment());
+  const [startDate, setStartDate] = useState(moment(moment().startOf("month")).startOf("isoWeek"));
+  const [totalSum, setTotalSum] = useState(0);
+
   const authInfo = useAppSelector((state) => state.auth);
   const weeklyWorkingHours = authInfo?.user ? authInfo.user.weeklyWorkingHours : 0;
 
   const prevMonth = () => {
+    const month = moment(selectedMonth).add(-1, 'M');
     setSelectedMonth(moment(selectedMonth).add(-1, 'M'));
+    setStartDate(moment(moment(month).startOf("month")).startOf("isoWeek"));
   }
 
   const nextMonth = () => {
+    const month = moment(selectedMonth).add(1, 'M');
     setSelectedMonth(moment(selectedMonth).add(1, 'M'));
+    setStartDate(moment(moment(month).startOf("month")).startOf("isoWeek"))
   }
 
   const onViewLogs = (day: Moment) => {
@@ -25,16 +33,13 @@ export const Timesheet = () => {
     navigate(`/logged-hours?day=${dayValue}`);
   }
 
-  const renderDays = () => {
-    const monthStart = moment(selectedMonth).startOf("month");
-    const startDate = moment(monthStart).startOf("isoWeek");
-    
+  const renderDaysInFuture = () => {
     const weeks = [];
     let weekDays = [];
     for (let i = 0; i < 35; i++) {
       weekDays.push(
-        <TimesheetDay key={i} currentDate={currentDate} selectedDate={moment(startDate).add(i, 'd')} 
-              hours={0} weeklyWorkingHours={weeklyWorkingHours} onViewLogs={onViewLogs}/>
+        <TimesheetDay key={i} currentDate={currentDate} selectedDate={moment(startDate).add(i, 'd')}
+          hours={0} weeklyWorkingHours={weeklyWorkingHours} onViewLogs={onViewLogs} />
       );
       if ((i + 1) % 7 === 0 && i !== 0) {
         weeks.push(
@@ -45,7 +50,7 @@ export const Timesheet = () => {
     }
     return <>{weeks}</>;
   }
-
+  
   return (
     <div className="card">
       <div className="card-header container">
@@ -86,7 +91,8 @@ export const Timesheet = () => {
             </tr>
           </thead>
           <tbody>
-            {renderDays()}
+            {startDate.isAfter(currentDate) && renderDaysInFuture()}
+            {!startDate.isAfter(currentDate) && <MonthWithLoggedHours currentDate={currentDate} startDate = {startDate} weeklyWorkingHours = {weeklyWorkingHours} onViewLogs={onViewLogs} setTotalSum = {setTotalSum}/>}
           </tbody>
         </table>
         <div className="container total-hours-container">
@@ -95,7 +101,7 @@ export const Timesheet = () => {
               &nbsp;
             </div>
             <div className="col-4">
-              <span className="total-hours bold">Total hours: 90</span>
+              <span className="total-hours bold">Total hours: {totalSum}</span>
             </div>
           </div>
         </div>

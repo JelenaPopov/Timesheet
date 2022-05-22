@@ -5,6 +5,7 @@ import { useGetAllUserProjectsQuery, Project} from "../projects/projectsSlice";
 import {useGetAllCategoriesQuery, Category} from "../categories/categoriesSlice";
 import { LoggedHoursForm } from "./LoggedHoursForm";
 import { LoggedHours, useEditLoggedHoursMutation } from "./loggedHoursSlice";
+import moment from "moment";
 
 interface IProps {
     loggedHours: LoggedHours,
@@ -22,7 +23,7 @@ export const EditLoggedHoursModal = (props: IProps) => {
     const [editLoggedHours] = useEditLoggedHoursMutation();
     const {
         data: projects = []
-    } = useGetAllUserProjectsQuery(null);
+    } = useGetAllUserProjectsQuery(props.day ? props.day : moment().format("yyyy-MM-DD"));
 
     const {
         data: categories = []

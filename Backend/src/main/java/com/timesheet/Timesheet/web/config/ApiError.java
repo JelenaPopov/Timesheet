@@ -10,11 +10,15 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class ApiError {
+
     private Date timestamp;
+
     private long status;
+
     private String error;
+
     private String message;
-    //link path
+
     private String path;
 
     public ApiError(Date timestamp, long status, String error, String message, String path) {

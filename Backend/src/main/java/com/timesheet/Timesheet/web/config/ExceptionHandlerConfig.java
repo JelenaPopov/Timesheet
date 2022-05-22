@@ -1,7 +1,6 @@
 package com.timesheet.Timesheet.web.config;
 
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
-import com.timesheet.Timesheet.exception.DeleteUserException;
 import com.timesheet.Timesheet.exception.RestrictRemoveException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.transaction.TransactionSystemException;
-import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
@@ -63,14 +61,6 @@ public class ExceptionHandlerConfig {
         ex.printStackTrace();
         return ResponseEntity.status(409)
                 .body(new ApiError(409, "ERRORS.ERROR", "ERRORS.DELETE_FORBIDDEN", req.getServletPath()));
-    }
-
-
-    @ExceptionHandler(value = {DeleteUserException.class})
-    public ResponseEntity<ApiError> deleteCode(Exception ex, HttpServletRequest req) {
-        ex.printStackTrace();
-        return ResponseEntity.status(409)
-                .body(new ApiError(409, "ERRORS.ERROR", "ERRORS.DELETE_MANDATORY", req.getServletPath()));
     }
 
     @ExceptionHandler(value = HttpClientErrorException.Unauthorized.class)

@@ -25,6 +25,7 @@ const baseQueryWithReauth: BaseQueryFn<
   if (result.error && result.error.status === 401) {
     window.localStorage.removeItem('token');
     api.dispatch(setNewValue(null));
+    api.dispatch(apiSlice.util.resetApiState());
   }
   return result
 }
@@ -37,7 +38,7 @@ export interface UserLogin {
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['Categories', 'Clients', 'Projects','User Projects', 'Users', 'Employees on Project', 'Logged Hours'],
+  tagTypes: ['Categories', 'Clients', 'Projects','User Projects', 'Users', 'Employees on Project', 'Logged Hours','Logged Hours for some period'],
   endpoints: (builder) => ({
     signIn: builder.mutation<{ token: string | undefined | null }, UserLogin>({
       query: (userLoginInfo: UserLogin) => ({

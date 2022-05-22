@@ -28,8 +28,8 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ['Projects']
     }),
-    getAllUserProjects: builder.query({
-      query: () => `/projects/filtered-by-employee`,
+    getAllUserProjects: builder.query<Project[], string>({
+      query: (date) => `/projects/filtered-by-employee?date=${date}`,
       providesTags: ['User Projects']
     }),
     getProject: builder.query({
@@ -65,14 +65,14 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['Employees on Project']
+      invalidatesTags: ['Employees on Project', 'User Projects']
     }),
     getEmployeesOnProject: builder.query<{ employeesOnProject: EmployeeOnProject[], totalPages: number }, {pageNo: number, projectId: number}>({
       query: ({pageNo = 0, projectId}) => `/projects/${projectId}/employees?pageNo=${pageNo - 1}&pageSize=6`,
       transformResponse(employeesOnProject: EmployeeOnProject[], meta) {
         return { employeesOnProject, totalPages: Number(meta?.response?.headers.get('Total-Pages')) }
       },
-      providesTags: ['Employees on Project']
+      providesTags: ['Employees on Project', 'User Projects']
     }),
   }),
 })

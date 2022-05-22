@@ -28,6 +28,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @RestController
@@ -97,9 +100,9 @@ public class ProjectController {
 
     @GetMapping("/filtered-by-employee")
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
-    public ResponseEntity<List<ProjectDTO>> findAllLoggedInUserProjects() {
+    public ResponseEntity<List<ProjectDTO>> findAllLoggedInUserProjects(@RequestParam String date) {
         User user = userService.getLoggedInUser();
-        return new ResponseEntity<>(mapper.toMinimalDto(service.findAllLoggedInUserProjects(user.getId())), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toMinimalDto(service.findAllLoggedInUserProjects(user.getId(), getLocalDate(date))), HttpStatus.OK);
     }
 
     @PostMapping("/{id}/employees")
@@ -121,5 +124,10 @@ public class ProjectController {
         headers.add("Total-Pages", Integer.toString(employeesOnProject.getTotalPages()));
 
         return new ResponseEntity<>(employeeOnProjectMapper.toDto(employeesOnProject.getContent()), headers, HttpStatus.OK);
+    }
+
+    private LocalDate getLocalDate(String date) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(date, formatter);
     }
 }

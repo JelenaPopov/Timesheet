@@ -26,6 +26,15 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ['Logged Hours']
     }),
+    getAllLoggedHoursForSomePeriod: builder.query<LoggedHours[], {startDate: string, endDate: string}>({
+      query: (arg) => {
+        let { startDate, endDate } = arg;
+        return {
+            url: `/logged-hours/all?startDate=${startDate}&endDate=${endDate}`
+        }
+      },
+      providesTags: ['Logged Hours for some period']
+    }),
     getLoggedHours: builder.query({
       query: (postId) => `/logged-hours/${postId}`,
       providesTags: ['Logged Hours']
@@ -36,7 +45,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: initialLoggedHours,
       }),
-      invalidatesTags: ['Logged Hours']
+      invalidatesTags: ['Logged Hours', 'Logged Hours for some period']
     }),
     editLoggedHours: builder.mutation({
       query: (loggedHours) => ({
@@ -44,20 +53,21 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body: loggedHours,
       }),
-      invalidatesTags: ['Logged Hours']
+      invalidatesTags: ['Logged Hours', 'Logged Hours for some period']
     }),
     deleteLoggedHours: builder.mutation({
       query: (id) => ({
         url: `logged-hours/${id}`,
         method: 'DELETE'
       }),
-      invalidatesTags: ['Logged Hours']
+      invalidatesTags: ['Logged Hours', 'Logged Hours for some period']
     })
   }),
 })
 
 export const {
   useGetAllLoggedHoursQuery,
+  useGetAllLoggedHoursForSomePeriodQuery,
   useGetLoggedHoursQuery,
   useAddNewLoggedHoursMutation,
   useEditLoggedHoursMutation,

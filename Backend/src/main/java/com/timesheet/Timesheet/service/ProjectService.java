@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -52,7 +53,7 @@ public class ProjectService implements GenericService<Project,Long> {
         return repository.save(project);
     }
 
-    public List<Project> findAllLoggedInUserProjects(Long userId){
-        return repository.findAllLoggedInUserProjects(userId);
+    public List<Project> findAllLoggedInUserProjects(Long userId, LocalDate date){
+        return repository.findAllLoggedInUserProjects(userId,date);
     }
 }

@@ -5,6 +5,7 @@ import { LoggedHoursForm } from "./LoggedHoursForm";
 import AddModal from "../../app/modals/AddModal";
 import { useGetAllUserProjectsQuery, Project} from "../projects/projectsSlice";
 import {useGetAllCategoriesQuery, Category} from "../categories/categoriesSlice";
+import moment from "moment";
 
 interface IProps {
     day: string | null
@@ -14,7 +15,7 @@ export const AddLoggedHoursModal = (props: IProps) => {
     const [addNewLoggedHours] = useAddNewLoggedHoursMutation();
     const {
         data: projects = []
-    } = useGetAllUserProjectsQuery(null);
+    } = useGetAllUserProjectsQuery(props.day ? props.day : moment().format("yyyy-MM-DD"));
 
     const {
         data: categories = []

@@ -1,12 +1,9 @@
 package com.timesheet.Timesheet.web.rest;
 
 import com.timesheet.Timesheet.domain.LoggedHours;
-import com.timesheet.Timesheet.domain.user.User;
 import com.timesheet.Timesheet.service.LoggedHoursService;
 import com.timesheet.Timesheet.service.user.UserService;
-import com.timesheet.Timesheet.web.dto.CategoryDTO;
 import com.timesheet.Timesheet.web.dto.LoggedHoursDTO;
-import com.timesheet.Timesheet.web.dto.ProjectDTO;
 import com.timesheet.Timesheet.web.mapper.LoggedHoursMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,14 +46,20 @@ public class LoggedHoursController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LoggedHoursDTO>> findAllUserLogs(@RequestParam(defaultValue = "0") Integer pageNo,
+    public ResponseEntity<List<LoggedHoursDTO>> findUserLogs(@RequestParam(defaultValue = "0") Integer pageNo,
                                                         @RequestParam(defaultValue = "10") Integer pageSize,
                                                         @RequestParam String created) {
-        Page<LoggedHours> loggedHours = service.findAllUserLogs(pageNo, pageSize, getLocalDate(created), userService.getLoggedInUser().getId());
+        Page<LoggedHours> loggedHours = service.findUserLogs(pageNo, pageSize, getLocalDate(created), userService.getLoggedInUser().getId());
         HttpHeaders headers = new HttpHeaders();
         headers.add("Total-Pages", Integer.toString(loggedHours.getTotalPages()));
 
         return new ResponseEntity<>(mapper.toDto(loggedHours.getContent()), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<LoggedHoursDTO>> findAll(@RequestParam String startDate, @RequestParam String endDate) {
+        List<LoggedHours> loggedHours = service.findAll(getLocalDate(startDate), getLocalDate(endDate), userService.getLoggedInUser().getId());
+        return new ResponseEntity<>(mapper.toMinimalDto(loggedHours), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

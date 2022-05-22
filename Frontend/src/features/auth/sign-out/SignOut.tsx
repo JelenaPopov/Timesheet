@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { apiSlice } from "../../../app/apiSlice";
 import { useAppDispatch } from "../../../app/hooks";
 import { setNewValue } from "../authSlice";
 import './SignOut.css';
@@ -9,6 +10,7 @@ export const SignOut = () => {
     const signOut = () => {
         window.localStorage.removeItem('token');
         dispatch(setNewValue(null));
+        dispatch(apiSlice.util.resetApiState());
     }
 
     return (

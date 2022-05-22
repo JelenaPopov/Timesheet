@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class LoggedHoursService implements GenericService<LoggedHours,Long>{
@@ -35,8 +36,12 @@ public class LoggedHoursService implements GenericService<LoggedHours,Long>{
         return repository.findAll(PageRequest.of(pageNo, pageSize));
     }
 
-    public Page<LoggedHours> findAllUserLogs(Integer pageNo, Integer pageSize, LocalDate created, Long userId) {
-        return repository.findAllUserLogs(PageRequest.of(pageNo, pageSize), created, userId);
+    public Page<LoggedHours> findUserLogs(Integer pageNo, Integer pageSize, LocalDate created, Long userId) {
+        return repository.findUserLogs(PageRequest.of(pageNo, pageSize), created, userId);
+    }
+
+    public List<LoggedHours> findAll(LocalDate startDate, LocalDate endDate, Long userId){
+        return repository.findAll(startDate, endDate, userId);
     }
 
     @Override

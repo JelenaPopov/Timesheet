@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface LoggedHoursRepository extends JpaRepository<LoggedHours,Long> {
@@ -25,6 +26,12 @@ public interface LoggedHoursRepository extends JpaRepository<LoggedHours,Long> {
                     "left join loggedHours.user user " +
                     "left join loggedHours.category category " +
                     "where user.id = :userId and loggedHours.created = :created")
-    Page<LoggedHours> findAllUserLogs(Pageable pageable,@Param("created") LocalDate created, @Param("userId") Long userId);
+    Page<LoggedHours> findUserLogs(Pageable pageable,@Param("created") LocalDate created, @Param("userId") Long userId);
+
+    @Query("select loggedHours " +
+            "from LoggedHours loggedHours " +
+            "left join fetch loggedHours.user user " +
+            "where user.id = :userId and loggedHours.created >= :startDate and loggedHours.created <= :endDate")
+    List<LoggedHours> findAll(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate, @Param("userId") Long userId);
 
 }
