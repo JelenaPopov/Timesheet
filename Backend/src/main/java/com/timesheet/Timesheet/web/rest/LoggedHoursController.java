@@ -48,8 +48,8 @@ public class LoggedHoursController {
     @GetMapping
     public ResponseEntity<List<LoggedHoursDTO>> findUserLogs(@RequestParam(defaultValue = "0") Integer pageNo,
                                                         @RequestParam(defaultValue = "10") Integer pageSize,
-                                                        @RequestParam String created) {
-        Page<LoggedHours> loggedHours = service.findUserLogs(pageNo, pageSize, getLocalDate(created), userService.getLoggedInUser().getId());
+                                                        @RequestParam String createdAt) {
+        Page<LoggedHours> loggedHours = service.findUserLogs(pageNo, pageSize, getLocalDate(createdAt), userService.getLoggedInUser().getId());
         HttpHeaders headers = new HttpHeaders();
         headers.add("Total-Pages", Integer.toString(loggedHours.getTotalPages()));
 

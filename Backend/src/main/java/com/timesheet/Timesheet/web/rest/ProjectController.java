@@ -98,7 +98,7 @@ public class ProjectController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/filtered-by-employee")
+    @GetMapping("/of-employee")
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     public ResponseEntity<List<ProjectDTO>> findAllLoggedInUserProjects(@RequestParam String date) {
         User user = userService.getLoggedInUser();

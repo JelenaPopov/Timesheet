@@ -29,7 +29,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Projects']
     }),
     getAllUserProjects: builder.query<Project[], string>({
-      query: (date) => `/projects/filtered-by-employee?date=${date}`,
+      query: (date) => `/projects/of-employee?date=${date}`,
       providesTags: ['User Projects']
     }),
     getProject: builder.query({

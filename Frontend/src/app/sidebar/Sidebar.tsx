@@ -1,4 +1,4 @@
-import { Link, To } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import routes, { Roles, Tabs } from '../../routes';
 import './Sidebar.css';
 
@@ -11,18 +11,12 @@ interface Props {
 const Sidebar = (props: Props) => {
     const activeTab = props.activeTab;
 
-    const liItem = (tab: Tabs, linkTo: To, iconClassName: string) => {
-        return (
-            <Link to={linkTo} key={tab} className="text-white link">
-                <li className={activeTab === tab ? "nav-link text-white active" : "nav-link text-white"}>
-                    <i className={iconClassName} /> {tab}
-                </li>
-            </Link >
-        );
-    }
-
     const liItems = routes.filter(route => route.roles.includes(props.role as Roles)).map((route) => (
-        liItem(route.key, route.path, route.icon)
+        <Link to={route.path} key={route.key} className="text-white link">
+            <li className={activeTab === route.key ? "nav-link text-white active" : "nav-link text-white"}>
+                <i className={route.icon} /> {route.key}
+            </li>
+        </Link >
     ));
 
     return (

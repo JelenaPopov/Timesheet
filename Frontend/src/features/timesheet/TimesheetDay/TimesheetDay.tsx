@@ -11,44 +11,28 @@ interface IProps {
 
 export const TimesheetDay = (props: IProps) => {
     const { currentDate, selectedDate, hours, weeklyWorkingHours, onViewLogs } = props;
+    let tdClassName = "week-day";
+    let hoursClassName = "white-week-day-hours";
+    let disabled = false;
 
-    const day = (tdClassName: string, hoursClassName: string, disabled: boolean = false) => {
-        const disabledClass = disabled ? "disabled":"";
-        return (
-            <td key={selectedDate.format("DD")} className={tdClassName}>
-                <div className={`week-day-number ${disabledClass}`}>{selectedDate.format("DD") + "."}</div>
-                <div className={`week-day-hours ${hoursClassName}`}>
-                    <button className="btn btn-link hours-btn" onClick={() => onViewLogs(selectedDate)} disabled={disabled}>
-                        Hours: {hours}
-                    </button>
-                </div>
-            </td>
-        );
+    if (currentDate.isBefore(selectedDate)) {
+        tdClassName = "disabled-week-day";
+        hoursClassName = "disabled-week-day-hours";
+        disabled = true;
+    } else if (hours > 0 && hours < (weeklyWorkingHours / 5)) {
+        hoursClassName = "red-week-day-hours";
+    } else if (hours > 0 && hours >= (weeklyWorkingHours / 5)) {
+        hoursClassName = "green-week-day-hours";
     }
 
     return (
-        <>
-            {
-                (() => {
-                    if (currentDate.isBefore(selectedDate)) {
-                        return (
-                            day("disabled-week-day", "disabled-week-day-hours", true)
-                        )
-                    } else if (hours > 0 && hours < (weeklyWorkingHours / 5)) {
-                        return (
-                            day("week-day", "red-week-day-hours")
-                        )
-                    } else if (hours > 0 && hours >= (weeklyWorkingHours / 5)) {
-                        return (
-                            day("week-day", "green-week-day-hours")
-                        )
-                    } else {
-                        return (
-                            day("week-day", "white-week-day-hours")
-                        )
-                    }
-                })()
-            }
-        </>
+        <td key={selectedDate.format("D")} className={tdClassName}>
+            <div className={`week-day-number ${disabled ? "disabled" : ""}`}>{selectedDate.format("D") + "."}</div>
+            <div className={`week-day-hours ${hoursClassName}`}>
+                <button className="btn btn-link hours-btn" onClick={() => onViewLogs(selectedDate)} disabled={disabled}>
+                    Hours: {hours}
+                </button>
+            </div>
+        </td>
     )
 }

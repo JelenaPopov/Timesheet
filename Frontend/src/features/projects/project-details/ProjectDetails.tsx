@@ -5,7 +5,7 @@ import ProjectDetailsTable from './ProjectDetailsTable';
 
 export const ProjectDetails = () => {
     const { projectId = '-1' } = useParams();
-    const { data: project, isSuccess } = useGetProjectQuery(projectId);
+    const { data: project } = useGetProjectQuery(projectId);
 
     const [page, setPage] = useState(1);
     const {

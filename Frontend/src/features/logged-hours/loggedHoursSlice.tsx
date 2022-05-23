@@ -18,7 +18,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: (arg) => {
         let { pageNo, created } = arg;
         return {
-            url: `/logged-hours?pageNo=${pageNo - 1}&pageSize=6&created=${created}`
+            url: `/logged-hours?pageNo=${pageNo - 1}&pageSize=6&createdAt=${created}`
         }
       },
       transformResponse(loggedHours: LoggedHours[], meta) {
@@ -33,7 +33,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
             url: `/logged-hours/all?startDate=${startDate}&endDate=${endDate}`
         }
       },
-      providesTags: ['Logged Hours for some period']
+      providesTags: ['Logged Hours for certain time period']
     }),
     getLoggedHours: builder.query({
       query: (postId) => `/logged-hours/${postId}`,
@@ -45,7 +45,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: initialLoggedHours,
       }),
-      invalidatesTags: ['Logged Hours', 'Logged Hours for some period']
+      invalidatesTags: ['Logged Hours', 'Logged Hours for certain time period']
     }),
     editLoggedHours: builder.mutation({
       query: (loggedHours) => ({
@@ -53,14 +53,14 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body: loggedHours,
       }),
-      invalidatesTags: ['Logged Hours', 'Logged Hours for some period']
+      invalidatesTags: ['Logged Hours', 'Logged Hours for certain time period']
     }),
     deleteLoggedHours: builder.mutation({
       query: (id) => ({
         url: `logged-hours/${id}`,
         method: 'DELETE'
       }),
-      invalidatesTags: ['Logged Hours', 'Logged Hours for some period']
+      invalidatesTags: ['Logged Hours', 'Logged Hours for certain time period']
     })
   }),
 })

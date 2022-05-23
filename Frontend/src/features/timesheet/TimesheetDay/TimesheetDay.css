@@ -6,6 +6,7 @@
 .disabled-week-day {
     height: inherit;
     background-color: rgb(236, 236, 236);
+    padding: 0px;
 }
 
 .week-day-hours {
@@ -42,6 +43,7 @@
     padding: 0px !important;
     text-decoration: none !important;
     color: black !important;
+    font-size: 15px !important;
 }
 
 .disabled{
