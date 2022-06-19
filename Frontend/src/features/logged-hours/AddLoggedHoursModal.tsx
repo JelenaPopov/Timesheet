@@ -11,11 +11,11 @@ interface IProps {
     day: string | null
 }
 
-export const AddLoggedHoursModal = (props: IProps) => {
+export const AddLoggedHoursModal = ({day}: IProps) => {
     const [addNewLoggedHours] = useAddNewLoggedHoursMutation();
     const {
         data: projects = []
-    } = useGetAllUserProjectsQuery(props.day ? props.day : moment().format("yyyy-MM-DD"));
+    } = useGetAllUserProjectsQuery(day ? day : moment().format("yyyy-MM-DD"));
 
     const {
         data: categories = []
@@ -32,7 +32,7 @@ export const AddLoggedHoursModal = (props: IProps) => {
                 const project = projects.find((el: Project) => el.id === parseInt(data.project));
                 data.category = category;
                 data.project = project;
-                data.created = props.day;
+                data.created = day;
                 await addNewLoggedHours(data).unwrap();
                 handleResetForm();
             } catch (err) {

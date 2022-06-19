@@ -12,11 +12,10 @@ interface IProps {
     onClose: () => void
 }
 
-export const EditProjectModal = (props: IProps) => {
-    const project = props.project;
-    let chosenProject = { id: props.project.id,version: props.project.version,
-        name: props.project.name, description: props.project.description,
-        client: props.project.client.id, teamLead: props.project.teamLead.id}
+export const EditProjectModal = ({project, show, onClose}: IProps) => {
+    let chosenProject = { id: project.id,version: project.version,
+        name: project.name, description: project.description,
+        client: project.client.id, teamLead: project.teamLead.id}
 
     const [editProject] = useEditProjectMutation();
     const {
@@ -40,7 +39,7 @@ export const EditProjectModal = (props: IProps) => {
                     description: inputs.description, client: client, teamLead: teamLead
                 }).unwrap();
                 handleResetForm();
-                props.onClose();
+                onClose();
             } catch (err) {
                 toast.error("Something goes wrong. Please try again!", {
                     position: toast.POSITION.TOP_CENTER
@@ -75,9 +74,9 @@ export const EditProjectModal = (props: IProps) => {
         <EditModal
             children={<ProjectForm inputs={inputs} onChange={handleInputChange}
                 clientsOptions={clientsOptions} usersOptions={usersOptions} />}
-            show={props.show}
+            show={show}
             onSave={handleSubmit}
-            onClose={props.onClose}
+            onClose={onClose}
             canSave={canSave}
             title="Edit Project"
             cssClasses="modal-dialog-lg" />

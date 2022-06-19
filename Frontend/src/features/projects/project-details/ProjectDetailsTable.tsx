@@ -10,7 +10,7 @@ interface IProps {
     onSetPage: (page: number) => void,
 }
 
-const ProjectDetailsTable = (props: IProps) => {
+const ProjectDetailsTable = ({title, header, body, page, totalPages, onSetPage}: IProps) => {
     const navigate = useNavigate();
 
     return (
@@ -21,7 +21,7 @@ const ProjectDetailsTable = (props: IProps) => {
                         <button className="btn btn-md back-btn" title="Back to Project List" onClick={() => navigate("/projects")}> &lt;&lt; Back </button>
                     </div>
                     <div className="col-8">
-                        <h2 className="project-title">'{props.title}' employees</h2>
+                        <h2 className="project-title">'{title}' employees</h2>
                     </div>
                     <div className="col-2">
                         &nbsp;
@@ -31,23 +31,23 @@ const ProjectDetailsTable = (props: IProps) => {
             <div className="card-body">
                 <table className="table table-striped">
                     <thead>
-                        {props.header}
+                        {header}
                     </thead>
                     <tbody>
-                        {props.body}
+                        {body}
                     </tbody>
                 </table>
 
                 <div className="container">
                     <div className="row">
                         <div className="col-2">
-                            {props.page > 1 && <button className="btn bold" onClick={() => props.onSetPage(props.page - 1)}>&lt; Previous</button>}
+                            {page > 1 && <button className="btn bold" onClick={() => onSetPage(page - 1)}>&lt; Previous</button>}
                         </div>
                         <div className="col-8">
-                            <span className="current-page bold">{props.page} of {props.totalPages} </span>
+                            <span className="current-page bold">{page} of {totalPages} </span>
                         </div>
                         <div className="col-2">
-                            {props.page < props.totalPages && <button className="btn bold next-btn" onClick={() => props.onSetPage(props.page + 1)}>Next &gt;</button>}
+                            {page < totalPages && <button className="btn bold next-btn" onClick={() => onSetPage(page + 1)}>Next &gt;</button>}
                         </div>
                     </div>
                 </div>

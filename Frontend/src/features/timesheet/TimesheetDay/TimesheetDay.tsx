@@ -9,8 +9,7 @@ interface IProps {
     onViewLogs: (day: Moment) => void
 }
 
-export const TimesheetDay = (props: IProps) => {
-    const { currentDate, selectedDate, hours, weeklyWorkingHours, onViewLogs } = props;
+export const TimesheetDay = ({ currentDate, selectedDate, hours, weeklyWorkingHours, onViewLogs }: IProps) => {
     let tdClassName = "week-day";
     let hoursClassName = "white-week-day-hours";
     let disabled = false;

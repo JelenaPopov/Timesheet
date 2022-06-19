@@ -11,8 +11,7 @@ interface IProps {
     setTotalSum: (sum: number) => void
 }
 
-export const LoggedMonth = (props: IProps) => {
-    const { currentDate, startDate, weeklyWorkingHours, onViewLogs } = props;
+export const LoggedMonth = ({currentDate, startDate, weeklyWorkingHours, onViewLogs, setTotalSum}: IProps) => {
     const {
         data: loggedHours = [],
         isLoading, isSuccess
@@ -21,7 +20,7 @@ export const LoggedMonth = (props: IProps) => {
     useEffect(() => {
         if (!isLoading && isSuccess) {
             const sum = loggedHours.reduce((total, currentValue) => total = total + currentValue.hours, 0);
-            props.setTotalSum(sum);
+            setTotalSum(sum);
         }
     });
 

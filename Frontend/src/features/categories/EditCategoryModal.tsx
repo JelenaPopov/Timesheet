@@ -10,8 +10,7 @@ interface IProps {
     onClose: () => void
 }
 
-export const EditCategoryModal = (props: IProps) => {
-    const category = props.category;
+export const EditCategoryModal = ({category, show, onClose}: IProps) => {
     const [editCategory] = useEditCategoryMutation();
 
     const onSaveCategoryClicked = async () => {
@@ -19,7 +18,7 @@ export const EditCategoryModal = (props: IProps) => {
             try {
                 await editCategory({ id: category?.id, version: category?.version, name: inputs.name }).unwrap();
                 handleResetForm();
-                props.onClose();
+                onClose();
             } catch (err) {
                 toast.error("Category with same name already exists!", {
                     position: toast.POSITION.TOP_CENTER
@@ -29,15 +28,15 @@ export const EditCategoryModal = (props: IProps) => {
         }
     }
 
-    const { inputs, handleInputChange, handleSubmit, handleResetForm} = useCustomForm(onSaveCategoryClicked, props.category);
+    const { inputs, handleInputChange, handleSubmit, handleResetForm} = useCustomForm(onSaveCategoryClicked, category);
     const canSave = [inputs.name].every(Boolean);
    
     return (
         <EditModal
             children={<CategoryForm inputs={inputs} onChange={handleInputChange} />}
-            show={props.show}
+            show={show}
             onSave={handleSubmit}
-            onClose={props.onClose}
+            onClose={onClose}
             canSave={canSave}
             title="Edit Category"
             cssClasses="modal-dialog-md" />

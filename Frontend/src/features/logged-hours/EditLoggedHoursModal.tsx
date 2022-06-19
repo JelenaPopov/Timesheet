@@ -14,16 +14,15 @@ interface IProps {
     day: string | null
 }
 
-export const EditLoggedHoursModal = (props: IProps) => {
-    const loggedHours = props.loggedHours;
-    let chosenLoggedHours = { id: props.loggedHours.id,version: props.loggedHours.version,
-        hours: props.loggedHours.hours, description: props.loggedHours.description,
-        project: props.loggedHours.project.id, category: props.loggedHours.category.id}
+export const EditLoggedHoursModal = ({loggedHours, show, onClose, day}: IProps) => {
+    let chosenLoggedHours = { id: loggedHours.id,version: loggedHours.version,
+        hours: loggedHours.hours, description: loggedHours.description,
+        project: loggedHours.project.id, category: loggedHours.category.id}
 
     const [editLoggedHours] = useEditLoggedHoursMutation();
     const {
         data: projects = []
-    } = useGetAllUserProjectsQuery(props.day ? props.day : moment().format("yyyy-MM-DD"));
+    } = useGetAllUserProjectsQuery(day ? day : moment().format("yyyy-MM-DD"));
 
     const {
         data: categories = []
@@ -39,10 +38,10 @@ export const EditLoggedHoursModal = (props: IProps) => {
 
                 await editLoggedHours({
                     id: loggedHours?.id, version: loggedHours?.version, hours: inputs.hours,
-                    description: inputs.description, project: project, category: category, created: props.day
+                    description: inputs.description, project: project, category: category, created: day
                 }).unwrap();
                 handleResetForm();
-                props.onClose();
+                onClose();
             } catch (err) {
                 toast.error("Something goes wrong. Please try again!", {
                     position: toast.POSITION.TOP_CENTER
@@ -77,9 +76,9 @@ export const EditLoggedHoursModal = (props: IProps) => {
         <EditModal
             children={<LoggedHoursForm inputs={inputs} onChange={handleInputChange}
             projectsOptions={projectsOptions} categoriesOptions={categoriesOptions} />}
-            show={props.show}
+            show={show}
             onSave={handleSubmit}
-            onClose={props.onClose}
+            onClose={onClose}
             canSave={canSave}
             title="Edit Logged Hours"
             cssClasses="modal-dialog-lg" />

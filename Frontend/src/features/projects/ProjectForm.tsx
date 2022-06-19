@@ -7,7 +7,7 @@ interface IProps {
     usersOptions: JSX.Element
 }
 
-export const ProjectForm = (props: IProps) => {
+export const ProjectForm = ({inputs, onChange, clientsOptions, usersOptions}: IProps) => {
 
     return (
         <>
@@ -20,8 +20,8 @@ export const ProjectForm = (props: IProps) => {
                     id="name"
                     placeholder="Name"
                     name="name"
-                    value={props.inputs.name}
-                    onChange={props.onChange} />
+                    value={inputs.name}
+                    onChange={onChange} />
             </div>
             <div className="mb-3">
                 <label htmlFor="description" className="form-label">Description</label>
@@ -30,27 +30,27 @@ export const ProjectForm = (props: IProps) => {
                     id="description"
                     placeholder="Description"
                     name="description"
-                    value={props.inputs.description}
+                    value={inputs.description}
                     rows={3}
-                    onChange={props.onChange} />
+                    onChange={onChange} />
             </div>
 
             <div className="mb-3">
                 <label htmlFor="client" className="form-label">Client</label>
-                <select className="form-control" value={props.inputs.client} name="client" id="client" onChange={props.onChange}>
+                <select className="form-control" value={inputs.client} name="client" id="client" onChange={onChange}>
                     <option key='-1' value='-1'>
                         --- Select option ---
                     </option>
-                    {props.clientsOptions}
+                    {clientsOptions}
                 </select>
             </div>
             <div className="mb-3">
                 <label htmlFor="teamLead" className="form-label">Team Lead</label>
-                <select className="form-control" value={props.inputs.teamLead} name="teamLead" id="teamLead" onChange={props.onChange}>
+                <select className="form-control" value={inputs.teamLead} name="teamLead" id="teamLead" onChange={onChange}>
                     <option key='-1' value='-1'>
                         --- Select option ---
                     </option>
-                    {props.usersOptions}
+                    {usersOptions}
                 </select>
             </div>
         </>

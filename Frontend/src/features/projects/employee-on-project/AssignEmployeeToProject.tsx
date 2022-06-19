@@ -11,8 +11,7 @@ interface IProps {
     onClose: () => void
 }
 
-export const AssignEmployeeToProject = (props: IProps) => {
-    const project = props.project;
+export const AssignEmployeeToProject = ({project, show, onClose}: IProps) => {
     const [assignEmployeeToProject] = useAssignEmployeeToProjectMutation();
 
     const {
@@ -29,7 +28,7 @@ export const AssignEmployeeToProject = (props: IProps) => {
                 await assignEmployeeToProject(data).unwrap();
 
                 handleResetForm();
-                props.onClose();
+                onClose();
             } catch (err) {
                 toast.error("Something goes wrong. Please try again!", {
                     position: toast.POSITION.TOP_CENTER
@@ -54,9 +53,9 @@ export const AssignEmployeeToProject = (props: IProps) => {
     return (
         <EditModal
             children={<AssignEmployeeToProjectForm inputs={inputs} onChange={handleInputChange} usersOptions={usersOptions} />}
-            show={props.show}
+            show={show}
             onSave={handleSubmit}
-            onClose={props.onClose}
+            onClose={onClose}
             canSave={canSave}
             title="Assign Employee"
             cssClasses="modal-dialog-lg" />

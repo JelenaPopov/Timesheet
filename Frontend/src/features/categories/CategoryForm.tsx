@@ -5,7 +5,7 @@ interface IProps {
     onChange: (event: React.FormEvent<HTMLInputElement>) => void
 }
 
-export const CategoryForm = (props: IProps) => {
+export const CategoryForm = ({inputs, onChange}: IProps) => {
 
     return (
         <div className="mb-3">
@@ -17,8 +17,8 @@ export const CategoryForm = (props: IProps) => {
                 id="categoryName"
                 placeholder="Category name"
                 name="name"
-                value={props.inputs.name}
-                onChange={props.onChange}
+                value={inputs.name}
+                onChange={onChange}
             />
         </div>
     )

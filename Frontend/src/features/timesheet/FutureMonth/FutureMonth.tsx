@@ -8,8 +8,7 @@ interface IProps {
     onViewLogs: (day: Moment) => void
 }
 
-export const FutureMonth = (props: IProps) => {
-    const { currentDate, startDate, weeklyWorkingHours, onViewLogs } = props;
+export const FutureMonth = ({currentDate, startDate, weeklyWorkingHours, onViewLogs}: IProps) => {
     const weeks = [];
     let weekDays = [];
     for (let i = 0; i < 35; i++) {

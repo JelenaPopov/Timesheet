@@ -10,8 +10,7 @@ interface IProps {
     onClose: () => void
 }
 
-export const EditClientModal = (props: IProps) => {
-    const client = props.client;
+export const EditClientModal = ({client, show, onClose}: IProps) => {
     const [editClient] = useEditClientMutation();
 
     const onSaveClientClicked = async () => {
@@ -22,7 +21,7 @@ export const EditClientModal = (props: IProps) => {
                     lastName: inputs.lastName, country: inputs.country, city: inputs.city, street: inputs.street, postalCode: inputs.postalCode
                 }).unwrap();
                 handleResetForm();
-                props.onClose();
+                onClose();
             } catch (err) {
                 toast.error("Something goes wrong. Please try again!", {
                     position: toast.POSITION.TOP_CENTER
@@ -32,15 +31,15 @@ export const EditClientModal = (props: IProps) => {
         }
     }
 
-    const { inputs, handleInputChange, handleSubmit, handleResetForm} = useCustomForm(onSaveClientClicked, props.client);
+    const { inputs, handleInputChange, handleSubmit, handleResetForm} = useCustomForm(onSaveClientClicked, client);
     const canSave = [inputs.firstName, inputs.lastName].every(Boolean);
     
     return (
         <EditModal
             children={<ClientForm inputs={inputs} onChange={handleInputChange} />}
-            show={props.show}
+            show={show}
             onSave={handleSubmit}
-            onClose={props.onClose}
+            onClose={onClose}
             canSave={canSave}
             title="Edit Client"
             cssClasses="modal-dialog-lg" />

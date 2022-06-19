@@ -5,7 +5,7 @@ interface IProps {
     onChange: (event: React.FormEvent<HTMLInputElement>) => void
 }
 
-export const ClientForm = (props: IProps) => {
+export const ClientForm = ({inputs, onChange}: IProps) => {
 
     return (
         <>
@@ -20,8 +20,8 @@ export const ClientForm = (props: IProps) => {
                             id="firstName"
                             placeholder="First Name"
                             name="firstName"
-                            value={props.inputs.firstName}
-                            onChange={props.onChange} />
+                            value={inputs.firstName}
+                            onChange={onChange} />
                     </div>
                     <div className="col-6">
                         <label htmlFor="lastName" className="form-label">Last Name</label>
@@ -32,8 +32,8 @@ export const ClientForm = (props: IProps) => {
                             id="lastName"
                             placeholder="Last Name"
                             name="lastName"
-                            value={props.inputs.lastName}
-                            onChange={props.onChange} />
+                            value={inputs.lastName}
+                            onChange={onChange} />
                     </div>
                 </div>
             </div>
@@ -45,8 +45,8 @@ export const ClientForm = (props: IProps) => {
                     id="country"
                     placeholder="Country"
                     name="country"
-                    value={props.inputs.country}
-                    onChange={props.onChange} />
+                    value={inputs.country}
+                    onChange={onChange} />
             </div>
             <div className="mb-3">
                 <div className="row">
@@ -58,8 +58,8 @@ export const ClientForm = (props: IProps) => {
                             id="postalCode"
                             placeholder="Postal Code"
                             name="postalCode"
-                            value={props.inputs.postalCode}
-                            onChange={props.onChange} />
+                            value={inputs.postalCode}
+                            onChange={onChange} />
                     </div>
                     <div className="col-8">
                         <label htmlFor="city" className="form-label">City</label>
@@ -69,8 +69,8 @@ export const ClientForm = (props: IProps) => {
                             id="city"
                             placeholder="City"
                             name="city"
-                            value={props.inputs.city}
-                            onChange={props.onChange} />
+                            value={inputs.city}
+                            onChange={onChange} />
                     </div>
                 </div>
             </div>
@@ -82,8 +82,8 @@ export const ClientForm = (props: IProps) => {
                     id="street"
                     placeholder="Street"
                     name="street"
-                    value={props.inputs.street}
-                    onChange={props.onChange} />
+                    value={inputs.street}
+                    onChange={onChange} />
             </div>
         </>
     )

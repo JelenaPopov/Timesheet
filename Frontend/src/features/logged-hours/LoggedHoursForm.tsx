@@ -7,26 +7,26 @@ interface IProps {
     categoriesOptions: JSX.Element
 }
 
-export const LoggedHoursForm = (props: IProps) => {
+export const LoggedHoursForm = ({inputs, onChange, projectsOptions, categoriesOptions}: IProps) => {
 
     return (
         <>
              <div className="mb-3">
                 <label htmlFor="project" className="form-label">Project</label>
-                <select className="form-control" value={props.inputs.project} name="project" id="project" onChange={props.onChange}>
+                <select className="form-control" value={inputs.project} name="project" id="project" onChange={onChange}>
                     <option key='-1' value='-1'>
                         --- Select option ---
                     </option>
-                    {props.projectsOptions}
+                    {projectsOptions}
                 </select>
             </div>
             <div className="mb-3">
                 <label htmlFor="category" className="form-label">Category</label>
-                <select className="form-control" value={props.inputs.category} name="category" id="category" onChange={props.onChange}>
+                <select className="form-control" value={inputs.category} name="category" id="category" onChange={onChange}>
                     <option key='-1' value='-1'>
                         --- Select option ---
                     </option>
-                    {props.categoriesOptions}
+                    {categoriesOptions}
                 </select>
             </div>
             <div className="mb-3">
@@ -38,8 +38,8 @@ export const LoggedHoursForm = (props: IProps) => {
                     id="hours"
                     placeholder="Time"
                     name="hours"
-                    value={props.inputs.hours}
-                    onChange={props.onChange} />
+                    value={inputs.hours}
+                    onChange={onChange} />
             </div>
             <div className="mb-3">
                 <label htmlFor="description" className="form-label">Description</label>
@@ -48,9 +48,9 @@ export const LoggedHoursForm = (props: IProps) => {
                     id="description"
                     placeholder="Description"
                     name="description"
-                    value={props.inputs.description}
+                    value={inputs.description}
                     rows={3}
-                    onChange={props.onChange} />
+                    onChange={onChange} />
             </div>
         </>
     )

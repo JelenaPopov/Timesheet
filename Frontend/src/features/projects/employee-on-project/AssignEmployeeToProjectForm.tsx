@@ -6,17 +6,17 @@ interface IProps {
     usersOptions: JSX.Element
 }
 
-export const AssignEmployeeToProjectForm = (props: IProps) => {
+export const AssignEmployeeToProjectForm = ({inputs, onChange, usersOptions}: IProps) => {
 
     return (
         <>
             <div className="mb-3">
                 <label htmlFor="employee" className="form-label">Employee</label>
-                <select className="form-control" value={props.inputs.employee} name="employee" id="employee" onChange={props.onChange}>
+                <select className="form-control" value={inputs.employee} name="employee" id="employee" onChange={onChange}>
                     <option key='-1' value='-1'>
                         -- Select option --
                     </option>
-                    {props.usersOptions}
+                    {usersOptions}
                 </select>
             </div>
             <div className="mb-3">
@@ -29,8 +29,8 @@ export const AssignEmployeeToProjectForm = (props: IProps) => {
                             className="form-control"
                             id="startDate"
                             name="startDate"
-                            value={props.inputs.startDate}
-                            onChange={props.onChange} />
+                            value={inputs.startDate}
+                            onChange={onChange} />
                     </div>
                     <div className="col-6">
                         <label htmlFor="endDate" className="form-label">End Date</label>
@@ -40,8 +40,8 @@ export const AssignEmployeeToProjectForm = (props: IProps) => {
                             className="form-control"
                             id="endDate"
                             name="endDate"
-                            value={props.inputs.endDate}
-                            onChange={props.onChange} />
+                            value={inputs.endDate}
+                            onChange={onChange} />
                     </div>
                 </div>
             </div>
